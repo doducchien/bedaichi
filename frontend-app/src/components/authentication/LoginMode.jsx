@@ -1,7 +1,6 @@
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import MenuItem from '@material-ui/core/MenuItem';
+
 
 //icon
 import EmailIcon from '@material-ui/icons/Email';
@@ -9,21 +8,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
 function LoginMode(){
-    const currencies = [
-        {
-            value: 0,
-            label: 'Nam',
-        },
-        {
-            value: 1,
-            label: 'Nữ',
-        },
-        {
-            value: 2,
-            label: 'Khác',
-        },
-
-    ];
+  
     return (
         <div className="signup-mode login-mode">    
             <Grid style={{ width: '100%', marginBottom: '30px' }} container spacing={1} alignItems="flex-end">

@@ -1,3 +1,5 @@
+import {useState, useEffect} from 'react'
+
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -12,22 +14,46 @@ import WcIcon from '@material-ui/icons/Wc';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import RepeatIcon from '@material-ui/icons/Repeat';
 
-function SignupMode(){
+function SignupMode({dataSignupProps}){
     const currencies = [
         {
-            value: 0,
+            value: '0',
             label: 'Nam',
         },
         {
-            value: 1,
+            value: '1',
             label: 'Nữ',
         },
         {
-            value: 2,
+            value: '2',
             label: 'Khác',
         },
 
     ];
+
+    const [dataSignup, setDataSignup] = useState({
+        email: null,
+        fullName: null,
+        phoneNumber: null,
+        birthday: null,
+        sex: "0",
+        password: null,
+        repassword: null
+    })
+
+
+    const onChangeInput = (event)=>{
+        let name = event.target.name;
+        let value = event.target.value;
+        setDataSignup({
+            ...dataSignup,
+            [name]: value.trim()
+        })
+    }
+
+    useEffect(()=>{
+        dataSignupProps(dataSignup)
+    }, [dataSignup])
     return (
         <div className="signup-mode">
 
@@ -36,7 +62,7 @@ function SignupMode(){
                     <EmailIcon style={{ color: 'green' }} />
                 </Grid>
                 <Grid style={{ width: 'calc(100% - 40px)' }} item>
-                    <TextField style={{ width: '100%' }} id="input-with-icon-grid" label="Email..." />
+                    <TextField name='email' onChange={onChangeInput} style={{ width: '100%' }}label="Email..." />
                 </Grid>
             </Grid>
 
@@ -45,7 +71,7 @@ function SignupMode(){
                     <AccountCircle style={{ color: 'red' }} />
                 </Grid>
                 <Grid style={{ width: 'calc(100% - 40px)' }} item>
-                    <TextField style={{ width: '100%' }} id="input-with-icon-grid" label="Họ và tên..." />
+                    <TextField name='fullName' onChange={onChangeInput} style={{ width: '100%' }}label="Họ và tên..." />
                 </Grid>
             </Grid>
 
@@ -54,11 +80,13 @@ function SignupMode(){
                     <PhoneInTalkIcon style={{ color: 'blue' }} />
                 </Grid>
                 <Grid style={{ width: 'calc(100% - 40px)' }} item>
-                    <TextField style={{ width: '100%' }} id="input-with-icon-grid" label="Số điện thoại..." />
+                    <TextField name='phoneNumber' onChange={onChangeInput} style={{ width: '100%' }}label="Số điện thoại..." />
                 </Grid>
             </Grid>
             <div className="selecter">
                 <TextField
+                    name='birthday' 
+                    onChange={onChangeInput}
                     style={{ width: '250px' }}
                     type='date'
                     id="input-with-icon-textfield"
@@ -72,12 +100,13 @@ function SignupMode(){
                     }}
                 />
                 <TextField
+                    name='sex'
+                    onChange={onChangeInput}
                     style={{ width: '250px' }}
                     id="standard-select-currency"
                     select
+                    defaultValue={dataSignup.sex}
                     label="Giới tính"
-                    // value={currency}
-                    // onChange={handleChange}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -100,7 +129,7 @@ function SignupMode(){
                     <VpnKeyIcon style={{ color: '#F40083' }} />
                 </Grid>
                 <Grid style={{ width: 'calc(100% - 40px)' }} item>
-                    <TextField type='password' style={{ width: '100%' }} id="input-with-icon-grid" label="Mật khẩu..." />
+                    <TextField name='password' onChange={onChangeInput} type='password' style={{ width: '100%' }}label="Mật khẩu..." />
                 </Grid>
             </Grid>
 
@@ -109,7 +138,7 @@ function SignupMode(){
                     <RepeatIcon style={{ color: 'green' }} />
                 </Grid>
                 <Grid style={{ width: 'calc(100% - 40px)' }} item>
-                    <TextField type='password' style={{ width: '100%' }} id="input-with-icon-grid" label="Nhập lại mật khẩu..." />
+                    <TextField name='repassword' onChange={onChangeInput} type='password' style={{ width: '100%' }}label="Nhập lại mật khẩu..." />
                 </Grid>
             </Grid>
 

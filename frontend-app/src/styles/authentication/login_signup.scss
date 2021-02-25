@@ -43,5 +43,10 @@
         align-items: center;
         justify-content: center;
     }
+    .alert_{
+        position: absolute;
+        top: 0;
+        right: -450px;
+    }
 
 }
