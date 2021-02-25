@@ -10,6 +10,14 @@ import Alert from '@material-ui/lab/Alert';
 import SignupMode from './SignupMode'
 import LoginMode from './LoginMode'
 
+
+//axios
+import axios from 'axios'
+
+
+//constraints
+import * as constraints from '../../constraints'
+
 function LoginSignup(props) {
     const [mode, setMode] = useState(1);
     const [data, setData] = useState({});
@@ -26,7 +34,23 @@ function LoginSignup(props) {
         setClick(true)
         const lengthErr = result.length;
         if(lengthErr === 0){
-            console.log('ok')
+            const date = data.birthday;
+            const d = date.split('-')
+            
+            const d_ = new Date(d[2], d[0] - 1, d[1])
+            
+            const data_ = {
+                ...data,
+                birthday: d_.getTime()
+            }
+            const route = constraints.server + '/authentication/signup'
+            axios.post(route, data_)
+            .then(response=>{
+                console.log(response.data)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
         }
     }
     useEffect(() => {

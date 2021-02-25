@@ -14,6 +14,8 @@ import WcIcon from '@material-ui/icons/Wc';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import RepeatIcon from '@material-ui/icons/Repeat';
 
+
+
 function SignupMode({dataSignupProps}){
     const currencies = [
         {
