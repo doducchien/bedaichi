@@ -9,6 +9,7 @@ import Alert from '@material-ui/lab/Alert';
 //component
 import SignupMode from './SignupMode'
 import LoginMode from './LoginMode'
+import Popup from './Popup'
 
 
 //axios
@@ -18,13 +19,28 @@ import axios from 'axios'
 //constraints
 import * as constraints from '../../constraints'
 
+//redux
+import {useDispatch} from 'react-redux'
+import * as actions from '../../redux/actions/actions'
+
+
+
 function LoginSignup(props) {
-    const [mode, setMode] = useState(1);
+    const [mode, setMode] = useState(0);
     const [data, setData] = useState({});
+    const [dataLogin, setDataLogin] = useState({})
     const [click, setClick] = useState(false)
     const [result, setResult] = useState([])
+    const [err, setErr] = useState({
+        open: false,
+        title: '',
+        content: ''
+    })
+
+    const dispatch = useDispatch();
 
     const changeMode = (mode) => {
+        setClick(false)
         setMode(mode)
     }
     const dataSignupProps = (data) => {
@@ -45,13 +61,68 @@ function LoginSignup(props) {
             }
             const route = constraints.server + '/authentication/signup'
             axios.post(route, data_)
-            .then(response=>{
-                console.log(response.data)
+            .then(async(response)=>{
+                let res = await response.data;
+                if(res.status){
+                    let timeout = setTimeout(()=>{
+                        setMode(0)
+                        setClick(false)
+                        clearTimeout(timeout)
+                    }, 2000)
+                    let result_ = [<Alert key={0} style={{ marginBottom: '20px' }} severity="success">Đăng ký thành công. Xin mời đăng nhập</Alert>]
+                    setResult(result_)
+                }
+                else if(res.errCode === 'ER_DUP_ENTRY'){
+                    let err_ = {
+                        ...err,
+                        open: true,
+                        title: "Đăng ký thất bại",
+                        content: "Email đã qua sử dụng. Vui lòng chọn email khác."
+                    }
+                    setErr(err_)
+                }
             })
             .catch(err=>{
-                console.log(err)
+                
             })
         }
+    }
+
+    const onClickLogin = ()=>{
+        
+        const route = constraints.server + '/authentication/login';
+        axios.post(route, dataLogin)
+        .then(async (response)=>{
+            let res = response.data;
+            if(res.status === false){
+                let err_ = {
+                    ...err,
+                    open: true
+                }
+                if(res.errCode === 'email_or_password_invalid'){
+                    err_.title = "Đăng nhập thất bại"
+                    err_.content = "Email không tồn tại hoặc mật khẩu bị nhập sai. Vui lòng thử lại sau."
+                }
+                setErr(err_)
+            }
+            else{
+                let token = res.token;
+                console.log(token)
+                dispatch(actions.setToken(token))
+            }
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+    const closeErr = ()=>{
+        setErr({...err, open: false})
+    }
+
+    const dataLoginProps = (data)=>{
+        
+        setDataLogin(data)
     }
     useEffect(() => {
         
@@ -82,15 +153,16 @@ function LoginSignup(props) {
                 <BottomNavigationAction onClick={() => changeMode(1)} label="Đăng ký" />
             </BottomNavigation>
             <div className="body">
-                {mode === 0 ? <LoginMode /> : <SignupMode dataSignupProps={dataSignupProps} />}
+                {mode === 0 ? <LoginMode dataLoginProps={dataLoginProps} /> : <SignupMode dataSignupProps={dataSignupProps} />}
 
             </div>
             <div className="_btn">
-                <Button onClick={onClickSignup} variant="contained" color={mode === 0 ? "Primary" : "secondary"}>{mode === 0 ? "Đăng nhập" : "Đăng ký"}</Button>
+                <Button onClick={mode === 1? onClickSignup: onClickLogin} variant="contained" color={mode === 0 ? "Primary" : "secondary"}>{mode === 0 ? "Đăng nhập" : "Đăng ký"}</Button>
             </div>
             <div style={click? {display: 'block'}: {display: 'none'}} className="alert_">
                 {result}
             </div>
+            <Popup err={err} closeErr={closeErr}/>
         </div>
     )
 }
