@@ -107,7 +107,7 @@ function LoginSignup(props) {
             }
             else{
                 let token = res.token;
-                console.log(token)
+                dispatch(actions.setUser(res.user))
                 dispatch(actions.setToken(token))
             }
         })

@@ -7,3 +7,24 @@ export const setToken = (data)=>{
         data: data
     }
 }
+
+export const removeToken = ()=>{
+    return{
+        type: constraints.removeToken
+    }
+}
+
+
+
+export const setUser = (data)=>{
+    return{
+        type: constraints.setUser,
+        data: data
+    }
+}
+
+export const removeUser = ()=>{
+    return{
+        type: constraints.removeUser
+    }
+}

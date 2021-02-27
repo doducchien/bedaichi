@@ -39,7 +39,8 @@ module.exports.login = (req, res)=>{
             res.json({
                 status: true,
                 errCode: null,
-                token: body.email + '*' + body.password 
+                token: body.email + '*' + body.password,
+                user: response[0]
             })
         }
         else{
@@ -64,10 +65,11 @@ module.exports.loginByToken = (req, res)=>{
         }
         else{
             if(response.length === 1){
-                console.log(response)
+                console.log(response[0])
                 res.json({
                     status: true,
-                    errCode: null
+                    errCode: null,
+                    user: response[0]
                 })
             }
             else{

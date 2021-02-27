@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 
+
+
 //icon
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import EmailIcon from '@material-ui/icons/Email';
@@ -15,23 +17,12 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import RepeatIcon from '@material-ui/icons/Repeat';
 
 
+//constraint
+import * as constraints from '../../constraints'
+
 
 function SignupMode({dataSignupProps}){
-    const currencies = [
-        {
-            value: '0',
-            label: 'Nam',
-        },
-        {
-            value: '1',
-            label: 'Nữ',
-        },
-        {
-            value: '2',
-            label: 'Khác',
-        },
-
-    ];
+    
 
     const [dataSignup, setDataSignup] = useState({
         email: null,
@@ -64,7 +55,7 @@ function SignupMode({dataSignupProps}){
                     <EmailIcon style={{ color: 'green' }} />
                 </Grid>
                 <Grid style={{ width: 'calc(100% - 40px)' }} item>
-                    <TextField name='email' onChange={onChangeInput} style={{ width: '100%' }}label="Email..." />
+                    <TextField name='email' onChange={onChangeInput} style={{ width: '100%' }} label="Email..." />
                 </Grid>
             </Grid>
 
@@ -73,7 +64,7 @@ function SignupMode({dataSignupProps}){
                     <AccountCircle style={{ color: 'red' }} />
                 </Grid>
                 <Grid style={{ width: 'calc(100% - 40px)' }} item>
-                    <TextField name='fullName' onChange={onChangeInput} style={{ width: '100%' }}label="Họ và tên..." />
+                    <TextField name='fullName' onChange={onChangeInput} style={{ width: '100%' }} label="Họ và tên..." />
                 </Grid>
             </Grid>
 
@@ -82,7 +73,7 @@ function SignupMode({dataSignupProps}){
                     <PhoneInTalkIcon style={{ color: 'blue' }} />
                 </Grid>
                 <Grid style={{ width: 'calc(100% - 40px)' }} item>
-                    <TextField name='phoneNumber' onChange={onChangeInput} style={{ width: '100%' }}label="Số điện thoại..." />
+                    <TextField name='phoneNumber' onChange={onChangeInput} style={{ width: '100%' }} label="Số điện thoại..." />
                 </Grid>
             </Grid>
             <div className="selecter">
@@ -117,7 +108,7 @@ function SignupMode({dataSignupProps}){
                         ),
                     }}
                 >
-                    {currencies.map((option) => (
+                    {constraints.types.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
                             {option.label}
                         </MenuItem>

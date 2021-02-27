@@ -10,25 +10,44 @@ import LoginSignup from './components/authentication/LoginSignup'
 import Home from './components/Home'
 
 //redux
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import * as constraints from './constraints'
 import axios from 'axios';
 
+//action
+import * as actions from './redux/actions/actions'
+
 
 function App() {
   const token = useSelector(state => state.token)
+  const user = useSelector(state => state.user)
+  console.log(user)
+  console.log(token)
   const [isAuthen, setIsAuthen] = useState(false)
+  const dispatch = useDispatch()
   useEffect(() => {
-    const route = constraints.server + '/authentication/loginByToken'
-    axios.post(route, { token: token })
-      .then(async res => {
-        const result = await res.data
-        if (result.status) setIsAuthen(true)
-      })
-      .catch(err => {
+    if (token) {
+      const route = constraints.server + '/authentication/loginByToken'
+      axios.post(route, { token: token })
+        .then(async res => {
+          const result = await res.data
+          if (result.status){
+            dispatch(actions.setUser(result.user))
+            setIsAuthen(true)
 
-      })
+          }
+        })
+        .catch(err => {
+
+        })
+    }
+    else{
+      
+      dispatch(actions.removeUser())
+      setIsAuthen(false)
+    }
+
   }, [token])
   return (
     <div className='App'>
