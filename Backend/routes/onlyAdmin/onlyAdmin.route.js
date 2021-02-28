@@ -10,7 +10,7 @@ const onlyAdmin_controller = require('../../controllers/onlyAdmin/onlyAdmin.cont
 //middleware
 onlyAdmin_router.use((req, res, next)=>{
     let body = req.body;
-    if(body.type === 'admin') next()
+    if(body.user_role === 'admin') next()
     else{
         res.json({
             permission: false

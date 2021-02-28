@@ -1,5 +1,5 @@
 
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
 //input
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -19,6 +19,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import RepeatIcon from '@material-ui/icons/Repeat';
 import SortIcon from '@material-ui/icons/Sort';
 
+
 //alert
 import Alert from '@material-ui/lab/Alert';
 
@@ -28,10 +29,15 @@ import * as constraints from '../../constraints'
 import axios from 'axios';
 
 
-function AddAcc() {
+//component
+import Popup from './Popup'
 
+
+function AddAcc(props) {
+    const {user_role} = props
 
     const [dataAdd, setDataAdd] = useState({
+        user_role: user_role,
         email: null,
         fullName: null,
         phoneNumber: null,
@@ -45,7 +51,13 @@ function AddAcc() {
     const [click, setClick] = useState(false)
     const [alertErr, setAlertErr] = useState([])
 
-    const onChangeInput = (event)=>{
+    const [result, setResult] = useState({
+        open: false,
+        title: '',
+        content: ''
+    })
+
+    const onChangeInput = (event) => {
         const name = event.target.name
         const value = event.target.value
         let dataAdd_ = {
@@ -55,38 +67,67 @@ function AddAcc() {
         setDataAdd(dataAdd_)
     }
 
-    const onClickAddAcc = ()=>{
+    const onClickAddAcc = () => {
         setClick(true)
         const length = alertErr.length;
-        if(length === 0){
-            const route = constraints.server + '/onlyAdmin/addAcc';
-            axios.post(route, dataAdd)
-            .then(res =>{
-                
-            })
-            .catch(err=>{
 
-            })
+        if (length === 0) {
+            const dataAdd_ = {
+                ...dataAdd,
+                birthday: constraints.changeTimeToInt(dataAdd.birthday)
+            }
+            const route = constraints.server + '/onlyAdmin/addAcc';
+            axios.post(route, dataAdd_)
+                .then( async res => {
+                    const data = await res.data
+                    const result_ = {...result, open: true}
+                    console.log(data)
+                    if(data.status === false){
+                        
+                        result_.title = 'Tạo tài khoản thất bại'
+                        if(data.errCode === 'ER_DUP_ENTRY'){
+                            result_.content = 'Email đã có tài khoản khác sử dụng. Vui lòng dùng email khác'
+                        }
+                        else{
+                            result_.content = 'Đã có lỗi xảy ra, vui lòng thử lại'
+                        }
+                    }
+                    else{
+                        result_.title = 'Tạo tài khoản thành công'
+                        result_.content = 'Tài khoản đã được tạo và phân quyền trên hệ thống. Hãy cung cấp nó cho nhân viên tương ứng sử dụng'
+
+                    }
+                    setResult(result_)
+                })
+                .catch(err => {
+
+                })
 
         }
-        console.log(dataAdd)
     }
-    
-    useEffect(()=>{
+    const closePopup = () => {
+        const result_ = {
+            ...result,
+            open: false
+        }
+        setResult(result_)
+    }
+
+    useEffect(() => {
         let alertErr_ = [];
         setAlertErr(alertErr_)
-        const {email, fullName, phoneNumber, birthday, sex, type, password, repassword} = dataAdd
-        if(email === null || email === '' ) alertErr_.push(<Alert key={0} style={{ marginBottom: '20px' }} severity="error">Email bị trống. Vui lòng điền đầy đủ</Alert>)
-        if(fullName === null || fullName === '' ) alertErr_.push(<Alert key={1} style={{ marginBottom: '20px' }} severity="error">Họ và tên bị trống. Vui lòng điền đầy đủ</Alert>)
-        if(phoneNumber === null || phoneNumber === '' ) alertErr_.push(<Alert key={2} style={{ marginBottom: '20px' }} severity="error">Số điện thoại bị trống. Vui lòng điền đầy đủ</Alert>)
-        if(birthday === null || birthday === '' ) alertErr_.push(<Alert key={3} style={{ marginBottom: '20px' }} severity="error">Ngày sinh bị trống. Vui lòng điền đầy đủ</Alert>)
-        if(sex === null || sex === '' ) alertErr_.push(<Alert key={4} style={{ marginBottom: '20px' }} severity="error">Giới tính bị trống. Vui lòng điền đầy đủ</Alert>)
-        if(type === null || type === '' ) alertErr_.push(<Alert key={5} style={{ marginBottom: '20px' }} severity="error">Phân quyền bị trống. Vui lòng điền đầy đủ</Alert>)
-        if(password === null || password === '' ) alertErr_.push(<Alert key={6} style={{ marginBottom: '20px' }} severity="error">Mật khẩu bị trống. Vui lòng điền đầy đủ</Alert>)
-        if(repassword !== password) alertErr_.push(<Alert key={7} style={{ marginBottom: '20px' }} severity="error">Mật khẩu nhập lại không khớp. Vui lòng nhập lại</Alert>)
+        const { email, fullName, phoneNumber, birthday, sex, type, password, repassword } = dataAdd
+        if (email === null || email === '') alertErr_.push(<Alert key={0} style={{ marginBottom: '20px' }} severity="error">Email bị trống. Vui lòng điền đầy đủ</Alert>)
+        if (fullName === null || fullName === '') alertErr_.push(<Alert key={1} style={{ marginBottom: '20px' }} severity="error">Họ và tên bị trống. Vui lòng điền đầy đủ</Alert>)
+        if (phoneNumber === null || phoneNumber === '') alertErr_.push(<Alert key={2} style={{ marginBottom: '20px' }} severity="error">Số điện thoại bị trống. Vui lòng điền đầy đủ</Alert>)
+        if (birthday === null || birthday === '') alertErr_.push(<Alert key={3} style={{ marginBottom: '20px' }} severity="error">Ngày sinh bị trống. Vui lòng điền đầy đủ</Alert>)
+        if (sex === null || sex === '') alertErr_.push(<Alert key={4} style={{ marginBottom: '20px' }} severity="error">Giới tính bị trống. Vui lòng điền đầy đủ</Alert>)
+        if (type === null || type === '') alertErr_.push(<Alert key={5} style={{ marginBottom: '20px' }} severity="error">Phân quyền bị trống. Vui lòng điền đầy đủ</Alert>)
+        if (password === null || password === '') alertErr_.push(<Alert key={6} style={{ marginBottom: '20px' }} severity="error">Mật khẩu bị trống. Vui lòng điền đầy đủ</Alert>)
+        if (repassword !== password) alertErr_.push(<Alert key={7} style={{ marginBottom: '20px' }} severity="error">Mật khẩu nhập lại không khớp. Vui lòng nhập lại</Alert>)
         setAlertErr(alertErr_)
     }, [dataAdd])
-    
+
     return (
         <div className="add-acc">
 
@@ -123,7 +164,7 @@ function AddAcc() {
                 </Grid>
             </div>
 
-            
+
 
 
 
@@ -194,7 +235,7 @@ function AddAcc() {
                 </TextField>
             </div>
 
-            
+
 
             <div className='text-input'>
                 <Grid style={{ width: '100%' }} container spacing={1} alignItems="flex-end">
@@ -220,13 +261,15 @@ function AddAcc() {
 
 
             <div className="btn_">
-                <Button onClick={onClickAddAcc} style={{width: '200px'}} variant="contained" color={ "secondary"}>Tạo</Button>
+                <Button onClick={onClickAddAcc} style={{ width: '200px' }} variant="contained" color={"secondary"}>Tạo</Button>
 
             </div>
 
-            <div className='alert_' style={click? {display: 'block'}: {display: 'none'}}>
+            <div className='alert_' style={click ? { display: 'block' } : { display: 'none' }}>
                 {alertErr}
             </div>
+
+            <Popup result={result} closePopup={closePopup} />
 
         </div>
     )

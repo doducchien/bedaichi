@@ -1,6 +1,8 @@
 import {useState} from 'react'
 
 
+//redux-react
+import {useSelector} from 'react-redux'
 
 //component
 import AddAcc from './AddAcc'
@@ -12,15 +14,16 @@ function Admin() {
     const changeMode =  (mode) =>{
         setMode(mode)
     }
+    const user_role = useSelector(state => state.user.type)
     return (
         <div className='admin'>
             <div className="header">
                 <div onClick={()=>changeMode('add')} className="add-acc_ menu-admin">Thêm tài khoản</div>
-                <div onClick={()=>changeMode('update')} className="update-acc_ menu-admin">Sửa tài khoản</div>
-                <div onClick={()=>changeMode('eamil')} className="email-to-manager menu-admin">Gửi mail cho quản lý</div>
+                <div onClick={()=>changeMode('update_interactive')} className="manager-acc_ menu-admin">Quản lý tài khoản</div>
+                <div onClick={()=>changeMode('console Log')} className="log menu-admin">Gửi mail cho quản lý</div>
             </div>
             <div className="body_">
-                {mode === 'add'? <AddAcc/>: ''}
+                {mode === 'add'? <AddAcc user_role={user_role}/>: ''}
                 {mode === 'update'? <UpdateAcc/>: ''}
                 {mode === 'email'? <EmailManager/>: ''}
             </div>

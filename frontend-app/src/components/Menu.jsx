@@ -12,7 +12,7 @@ function Menu(props) {
     return (
         <div className='menu'>
             <div className="infomation">
-                <img src="https://lh3.googleusercontent.com/proxy/dsSxOSCgmyxQNvwggd-ZkehFFkF4qC1lvQia7iP-Hv4Qp2wUxh0mS35nrX8ZF7fmlh5bHK1zHaCRiwhUqEy5uhdai3wEJZ8BwW3FkMuDC2SkW_B3jtiDooHhEy5l8YDU9IpCsriKMVD6gmmGrS2SNM-LJ2FdNbg7s1Dld0PTgyzFK-FLscxPEzSGDY1Pqg" />
+                <img src="https://i.pinimg.com/736x/91/06/21/9106217e59456dbc2593f74737f119c6.jpg" />
                 <p>Đỗ Đức Chiến</p>
                 <u>Quản trị viên</u>
             </div>
@@ -29,7 +29,7 @@ function Menu(props) {
                 <span class="material-icons">account_circle</span>
                 <span onClick={logout} class="material-icons">logout</span>
             </div>
-
+        
 
         </div>
     )

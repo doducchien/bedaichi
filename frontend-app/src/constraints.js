@@ -1,5 +1,5 @@
+//value
 export const server = 'http://localhost:1999';
-
 export const sexes = [
     {
         value: '0',
@@ -37,3 +37,9 @@ export const types = [
         label: 'product',
     },
 ]
+
+//functions
+export const changeTimeToInt = (date)=>{
+    const d = date.split('-')
+    return new Date(d[2], d[0] - 1, d[1]).getTime();
+}
