@@ -50,14 +50,10 @@ function LoginSignup(props) {
         setClick(true)
         const lengthErr = result.length;
         if(lengthErr === 0){
-            const date = data.birthday;
-            const d = date.split('-')
-            
-            const d_ = new Date(d[2], d[0] - 1, d[1])
             
             const data_ = {
                 ...data,
-                birthday: d_.getTime()
+                birthday: constraints.changeTimeToInt(data.birthday)
             }
             const route = constraints.server + '/authentication/signup'
             axios.post(route, data_)

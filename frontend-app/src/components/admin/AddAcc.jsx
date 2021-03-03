@@ -77,7 +77,11 @@ function AddAcc(props) {
                 birthday: constraints.changeTimeToInt(dataAdd.birthday)
             }
             const route = constraints.server + '/onlyAdmin/addAcc';
-            axios.post(route, dataAdd_)
+            axios.post(route, dataAdd_,{
+                headers:{
+                    'user_role': user_role
+                }
+            })
                 .then( async res => {
                     const data = await res.data
                     const result_ = {...result, open: true}

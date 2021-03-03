@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux'
 
 //component
 import AddAcc from './AddAcc'
-import UpdateAcc from './UpdateAcc'
+import ManageAcc from './ManagerAcc'
 import EmailManager from './EmailManager'
 
 function Admin() {
@@ -19,12 +19,12 @@ function Admin() {
         <div className='admin'>
             <div className="header">
                 <div onClick={()=>changeMode('add')} className="add-acc_ menu-admin">Thêm tài khoản</div>
-                <div onClick={()=>changeMode('update_interactive')} className="manager-acc_ menu-admin">Quản lý tài khoản</div>
-                <div onClick={()=>changeMode('console Log')} className="log menu-admin">Gửi mail cho quản lý</div>
+                <div onClick={()=>changeMode('manageAcc')} className="manager-acc_ menu-admin">Quản lý tài khoản</div>
+                <div onClick={()=>changeMode('console Log')} className="log menu-admin">Nhật ký</div>
             </div>
             <div className="body_">
                 {mode === 'add'? <AddAcc user_role={user_role}/>: ''}
-                {mode === 'update'? <UpdateAcc/>: ''}
+                {mode === 'manageAcc'? <ManageAcc user_role={user_role}/>: ''}
                 {mode === 'email'? <EmailManager/>: ''}
             </div>
 

@@ -41,5 +41,19 @@ export const types = [
 //functions
 export const changeTimeToInt = (date)=>{
     const d = date.split('-')
-    return new Date(d[2], d[0] - 1, d[1]).getTime();
+    console.log(d[0], d[1], d[2])
+
+    return new Date(d[0], d[1] - 1, d[2]).getTime();
+}
+
+export const changeIntToTime = (int)=>{
+    const d = new Date()
+    d.setTime(int)
+    const mm = d.getMonth();
+    const dd = d.getDate();
+    const yyyy = d.getFullYear();
+
+    const date = mm + '/' + dd + '/' + yyyy;
+    return date;
+    
 }

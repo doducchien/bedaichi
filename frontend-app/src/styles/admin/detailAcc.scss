@@ -1,0 +1,11 @@
+.line_{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    span{
+        flex: 1;
+        padding-left: 10px;
+        font-size: 18px;
+    }
+}

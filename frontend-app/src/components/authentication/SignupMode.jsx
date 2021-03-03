@@ -108,7 +108,7 @@ function SignupMode({dataSignupProps}){
                         ),
                     }}
                 >
-                    {constraints.types.map((option) => (
+                    {constraints.sexes.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
                             {option.label}
                         </MenuItem>

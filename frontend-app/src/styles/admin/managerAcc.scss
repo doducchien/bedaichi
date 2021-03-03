@@ -1,0 +1,90 @@
+.manager-acc{
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    padding: 50px;
+    .header{
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid gray;
+        input{
+            width: 600px;
+            height: 40px;
+            padding-left: 10px;
+        }
+    }
+    .body{
+        width: 100%;
+        height: calc(100% - 60px);
+        .list_{
+            width: 100%;
+            height: 100%;
+            list-style: none;
+            overflow: auto;
+            li{
+                width: 100%;
+                height: 50px;
+                padding-left: 10px;
+                padding-right: 10px;
+                background-color: #E1E8ED;
+                margin-bottom: 10px;
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                transition: 0.4s;
+
+                .full-name{
+                    display: inline-block;
+                    width: 200px;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                  
+                }
+                .email{
+                    display: inline-block;
+                    width: 200px;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                }
+                .role{
+                    display: inline-block;
+                    width: 70px;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                }
+                .icon-action{
+                    display: inline-block;
+                    width: 100px;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+           
+                    .icon_{
+                        height: 100%;
+                        width: 33px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: 0.4s;
+                        
+                    }
+                    .icon_:hover{
+                        background-color: cadetblue;
+                    }
+                }
+            }
+            li:hover{
+                background-color: #b8cad8;
+            }
+        }
+    }
+
+}
