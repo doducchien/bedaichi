@@ -11,6 +11,7 @@ const onlyAdmin_controller = require('../../controllers/onlyAdmin/onlyAdmin.cont
 onlyAdmin_router.use((req, res, next)=>{
 
     const user_role = req.headers.user_role
+    console.log(user_role)
   
     if(user_role === 'admin') next()
     else{
@@ -24,14 +25,21 @@ onlyAdmin_router.use((req, res, next)=>{
 onlyAdmin_router.route('/addAcc')
 .post(onlyAdmin_controller.addAcc)
 
-onlyAdmin_router.route('/getAcc/:filter')
+onlyAdmin_router.route('/getAcc/:filter/:keyword')
 .get(onlyAdmin_controller.getAcc)
 
 onlyAdmin_router.route('/getAccDetail/:email')
 .get(onlyAdmin_controller.getAccDetail)
 
+onlyAdmin_router.route('/updateAcc')
+.put(onlyAdmin_controller.updateAcc)
+
 onlyAdmin_router.route('/deleteAcc/:email')
 .delete(onlyAdmin_controller.deleteAcc)
+
+
+
+
 
 
 module.exports = onlyAdmin_router;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -44,13 +44,16 @@ const StyledMenuItem = withStyles((theme) => ({
 
 }))(MenuItem);
 
-export default function MenuDropdown() {
+export default function MenuDropdown(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [feature, setFeature] = React.useState('Tất cả')
+    const [feature, setFeature] = React.useState('all')
 
+    useEffect(()=>{
+        props.changeFilterMode(feature)
+    }, [feature])
     const handleClick = (event) => {
         
-        console.log(event.currentTarget)
+       
         setAnchorEl(event.currentTarget);
 
     };
@@ -70,7 +73,7 @@ export default function MenuDropdown() {
                 aria-controls="customized-menu"
                 aria-haspopup="true"
                 variant="contained"
-                color="primary"
+                color="secondary"
                 onClick={handleClick}
                 style={{ width: '200px', height: '40px' }}
             >
@@ -86,6 +89,9 @@ export default function MenuDropdown() {
                 <StyledMenuItem onClick={onFeature}>                 
                     <ListItemText style={{width: '100%'}}  primary="all" />
                 </StyledMenuItem>
+
+                
+
                 <StyledMenuItem onClick={onFeature} >
                    
                     <ListItemText style={{width: '100%'}}   primary="admin" />
@@ -104,6 +110,10 @@ export default function MenuDropdown() {
 
                 <StyledMenuItem onClick={onFeature}>
                     <ListItemText style={{width: '100%'}}   primary="product" />
+                </StyledMenuItem>
+
+                <StyledMenuItem onClick={onFeature}>                 
+                    <ListItemText style={{width: '100%'}}  primary="none" />
                 </StyledMenuItem>
 
                 

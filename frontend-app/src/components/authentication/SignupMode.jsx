@@ -30,6 +30,7 @@ function SignupMode({dataSignupProps}){
         phoneNumber: null,
         birthday: null,
         sex: "0",
+        type: 'none',
         password: null,
         repassword: null
     })

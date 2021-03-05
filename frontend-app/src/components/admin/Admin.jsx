@@ -10,7 +10,7 @@ import ManageAcc from './ManagerAcc'
 import EmailManager from './EmailManager'
 
 function Admin() {
-    const [mode, setMode] = useState('add')
+    const [mode, setMode] = useState('manageAcc')
     const changeMode =  (mode) =>{
         setMode(mode)
     }
@@ -25,7 +25,7 @@ function Admin() {
             <div className="body_">
                 {mode === 'add'? <AddAcc user_role={user_role}/>: ''}
                 {mode === 'manageAcc'? <ManageAcc user_role={user_role}/>: ''}
-                {mode === 'email'? <EmailManager/>: ''}
+                {mode === 'email'? <EmailManager user_role={user_role}/>: ''}
             </div>
 
 

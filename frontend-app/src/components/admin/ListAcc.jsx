@@ -1,5 +1,5 @@
 
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
 //icon
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
@@ -15,6 +15,7 @@ import * as constraints from '../../constraints'
 //component
 import DetailAcc from './DetailAcc'
 import Popup from './Popup'
+import SelectRole from './SelectRole'
 
 function ListAcc(props) {
     const { data, user_role, reload } = props
@@ -28,12 +29,12 @@ function ListAcc(props) {
     })
     const [open, setOpen] = useState(false)
 
-    const closePopup = ()=>{
-        let resultDelete_ = {...resultDelete, open: false}
+    const closePopup = () => {
+        let resultDelete_ = { ...resultDelete, open: false }
         setResultDelete(resultDelete_)
     }
 
-    const handleClose = ()=>{
+    const handleClose = () => {
         setOpen(false)
     }
     const getAccDetail = (email) => {
@@ -51,7 +52,7 @@ function ListAcc(props) {
             })
     }
 
-    const deleteAcc = (email)=>{
+    const deleteAcc = (email) => {
         const route = constraints.server + '/onlyAdmin/deleteAcc/' + email;
         axios.delete(route,
             {
@@ -62,8 +63,8 @@ function ListAcc(props) {
         )
             .then(async res => {
                 const result = await res.data
-                let resultDelete_ = {...resultDelete, open: true}
-                if(result.status){
+                let resultDelete_ = { ...resultDelete, open: true }
+                if (result.status) {
                     resultDelete_.content = `Tài khoản ${email}  đã được xóa thành công`
                 }
                 else resultDelete_.content = 'Đã có lỗi xảy ra. Vui lòng thử lại sau'
@@ -71,25 +72,36 @@ function ListAcc(props) {
                 setResultDelete(resultDelete_)
             })
     }
-    useEffect(()=>{
+    useEffect(() => {
         reload()
-    },[resultDelete])
-    var i = 0
-    data.forEach(item => {
-        let li =
-            <li key={i}>
-                <span className='full-name'>{item.fullName}</span>
-                <span className='email'>{item.email}</span>
-                <span className='role'>{item.type}</span>
-                <span className='icon-action'>
-                    <span onClick={() => getAccDetail(item.email)} className='icon_'><ArrowRightAltIcon /></span>
-                    <span className='icon_'><SortIcon /></span>
-                    <span onClick={()=> deleteAcc(item.email)} className='icon_'><DeleteForeverIcon /></span>
-                </span>
-            </li>
-        list.push(li)
-        i++
-    })
+    }, [resultDelete])
+
+    const changeRole = (value)=>{
+        props.changeRole(value)
+    }
+
+    if (data.length > 0) {
+        var i = 0
+        data.forEach(item => {
+            let li =
+                <li key={i}>
+                    <span className='full-name'>{item.fullName}</span>
+                    <span className='email'>{item.email}</span>
+                    <span className='role'>{item.type}</span>
+                    <span className='icon-action'>
+                        <span onClick={() => getAccDetail(item.email)} className='icon_'><ArrowRightAltIcon /></span>
+                        {/* <span className='icon_'><SortIcon /></span> */}
+                        <SelectRole email={item.email} changeRole={changeRole} />
+                        <span onClick={() => deleteAcc(item.email)} className='icon_'><DeleteForeverIcon /></span>
+                    </span>
+                </li>
+            list.push(li)
+            i++
+        })
+    }
+
+    
+
     return (
         <>
             <ul className="list_">

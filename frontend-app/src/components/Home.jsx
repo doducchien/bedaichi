@@ -8,18 +8,25 @@ import 'material-icons/iconfont/material-icons.scss';
 //component
 import Menu from './Menu'
 import Admin from './admin/Admin'
+import Staff from './staff/Staff'
 
 
 function Home() {
     const [position, setPosition] = useState('admin');
-
+    const changePosition = (pos)=>{
+        setPosition(pos)
+    }
     return (
         <div className='home'>
 
-            <Menu position={position} />
+            <Menu changePosition={changePosition} position={position} />
             <div className="right">
                 {
                    position === 'admin'? <Admin />: ''
+                }
+
+                {
+                    position == 'staff'? <Staff />: ''
                 }
                 
             </div>
