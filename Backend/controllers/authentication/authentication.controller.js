@@ -12,6 +12,7 @@ module.exports.signup = (req, res)=>{
     let sql = 'INSERT INTO User SET ?'
     db.query(sql, [body], (err, response)=>{
         if(err){
+            console.log(err)
             if(err.code === 'ER_DUP_ENTRY'){
                 res.json({
                     status: false,
