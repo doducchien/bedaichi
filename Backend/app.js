@@ -12,10 +12,10 @@ app.use(cors())
 
 const authentication_router = require('./routes/authentication/authentication.route')
 const onlyAdmin_router = require('./routes/onlyAdmin/onlyAdmin.route')
-
+const staff_router = require('./routes/staff/staff.route')
 app.use('/authentication', authentication_router)
 app.use('/onlyAdmin', onlyAdmin_router)
-
+app.use('/staff', staff_router)
 
 
 app.listen(port, ()=>{

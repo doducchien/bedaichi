@@ -1,3 +1,6 @@
+import { TimelineItem } from '@material-ui/lab';
+import axios from 'axios'
+
 //value
 export const server = 'http://localhost:1999';
 export const sexes = [
@@ -37,6 +40,68 @@ export const types = [
         label: 'product',
     },
 ]
+
+export const statusWork = [
+    {
+        value: '0',
+        label: 'Đang làm việc'
+    },
+
+    {
+        value: '1',
+        label: 'Đã nghỉ việc'
+    }
+]
+
+export const position = [
+    {
+        value: 'manager',
+        label: 'GIÁM ĐỐC'
+    },
+
+    {
+        value: 'secretary',
+        label: 'THƯ KÝ'
+    },
+
+    {
+        value: 'accountant',
+        label: 'KẾ TOÁN'
+    },
+
+    {
+        value: 'sale',
+        label: 'SALE'
+    },
+
+    {
+        value: 'marketing',
+        label: 'TIẾP THỊ'
+    },
+
+    {
+        value: 'design',
+        label: 'THIẾT KẾ'
+    },
+
+    {
+        value: 'print',
+        label: 'IN ẤN'
+    },
+    {
+        value: 'machine',
+        label: 'GIA CÔNG'
+    },
+    {
+        value: 'printFile',
+        label: 'Xử lý in file'
+    },
+   
+    
+]
+    
+
+
 
 //functions
 export const changeTimeToInt = (date)=>{

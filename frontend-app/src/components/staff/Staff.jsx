@@ -1,7 +1,9 @@
 import {useState} from 'react'
+import {useSelector} from 'react-redux'
 import AddStaff from './AddStaff'
 function Staff() {
     const [mode, setMode] = useState('add')
+    const user_role = useSelector(state => state.user.type)
     const changeMode = (mode)=>{
         setMode(mode)
     }
@@ -14,7 +16,7 @@ function Staff() {
                 <div onClick={()=>changeMode('timeword')} className="manager-real-work menu_">Quản lý thời gian làm việc</div>
             </div>
             <div className="body_">
-                {mode === 'add' ? <AddStaff/>: ''}
+                {mode === 'add' ? <AddStaff user_role={user_role}/>: ''}
             </div>
         </div>
     )
