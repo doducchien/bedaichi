@@ -1,0 +1,55 @@
+.staff{
+    width: 100%;
+    height: 100%;
+    .header{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: space-around;
+        .menu_{
+            width: 220px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .manager-department{
+            background-color: brown;
+        }
+        .add-staff_{
+            background-color: darkblue;
+        }
+        .manager-infomation-staff{
+            background-color: coral;
+        }
+        .manager-real-work{
+            background-color: darkcyan;
+        }
+
+        .manager-department:hover{
+            background-color: rgb(104, 24, 24);
+        }
+        .add-staff_:hover{
+            background-color: rgb(8, 8, 54);
+        }
+        .manager-infomation-staff:hover{
+            background-color: rgb(163, 57, 18);
+        }
+        .manager-real-work:hover{
+            background-color: rgb(9, 90, 90);
+        }
+    }
+    .body_{
+        width: 100%;
+        height: calc(100% - 50px);
+        
+        padding: 20px;
+
+        
+    }
+}
