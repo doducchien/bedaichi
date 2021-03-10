@@ -1,0 +1,33 @@
+.manager-department{
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    padding: 0 0 0 0;
+    
+    .list-department{
+        height: 100%;
+        width: 800px;
+        overflow: auto;
+        .department{
+            width: 370px;
+            height: 200px;
+            float: left;
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+            background-color: rgb(213, 215, 216);
+            cursor: pointer;
+            transition: 0.4s;
+            border-radius: 20px;
+        }
+
+        .department:hover{
+            background-color: rgb(170, 170, 175);
+        }
+    }
+    
+
+    
+}

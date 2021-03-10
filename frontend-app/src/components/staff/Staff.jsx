@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import {useSelector} from 'react-redux'
 import AddStaff from './AddStaff'
+import ManagerDepartment from './ManagerDepartment'
 function Staff() {
     const [mode, setMode] = useState('add')
     const user_role = useSelector(state => state.user.type)
@@ -17,6 +18,7 @@ function Staff() {
             </div>
             <div className="body_">
                 {mode === 'add' ? <AddStaff user_role={user_role}/>: ''}
+                {mode === 'department'? <ManagerDepartment user_role={user_role}/>: ''}
             </div>
         </div>
     )

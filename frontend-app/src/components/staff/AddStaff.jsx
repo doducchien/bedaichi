@@ -32,6 +32,9 @@ import axios from 'axios';
 //react
 import { useEffect, useState } from 'react';
 
+//component
+import Popup from './Popup'
+
 
 function AddStaff(props) {
     const { user_role } = props
@@ -54,6 +57,19 @@ function AddStaff(props) {
 
     const [alertErr, setAlertErr] = useState([])
 
+    const [result, setResult] = useState({
+        open: false,
+        title: '',
+        content: ''
+    })
+
+    const closePopup = () => {
+        const result_ = {
+            ...result,
+            open: false
+        }
+        setResult(result_)
+    }
 
     useEffect(() => {
         const route = constraints.server + '/staff/getAllDepartment';
@@ -114,8 +130,28 @@ function AddStaff(props) {
                     'user_role': user_role
                 }
             })
-            .then(res=>{
-                console.log(res.data)
+            .then(async res=>{
+                    const data = await res.data
+                    const result_ = {...result, open:true }
+                    if(data.status === false){
+                        result_.title = 'Thêm nhân viên thất bại'
+                        if(data.errCode === 'ER_DUP_ENTRY'){
+                            result_.content = 'Email đã có nhân viên khác sử dụng. Vui lòng dùng email khác'
+                        }
+                        else{
+                            result_.content = 'Đã có lỗi xảy ra, vui lòng thử lại'
+                        }
+                    }
+                    else{
+                        result_.title = 'Tạo nhân viên thành công'
+                        result_.content = 'Thông tin nhân viên đã được tạo trên hệ thống'
+
+                    }
+                    setResult(result_)
+
+            })
+            .catch(err => {
+
             })
         }
     }
@@ -341,7 +377,7 @@ function AddStaff(props) {
                 {alertErr}
             </div>
 
-            {/* <Popup result={result} closePopup={closePopup} /> */}
+            <Popup result={result} closePopup={closePopup} />
         </div>
     )
 }
