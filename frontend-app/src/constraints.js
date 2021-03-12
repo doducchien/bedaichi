@@ -122,3 +122,11 @@ export const changeIntToTime = (int)=>{
     return date;
     
 }
+
+export const randomID = ()=>{
+    let id = '';
+    for(let i = 0; i < 10; i++){
+        id += `${Math.floor(Math.random() * 10)}`
+    }
+    return id;
+}
