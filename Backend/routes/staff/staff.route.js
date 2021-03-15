@@ -22,6 +22,9 @@ staff_router.route('/getAllDepartment')
 staff_router.route('/getDepartment/:id')
 .get(staff_controller.getDepartment)
 
+staff_router.route('/searchStaff/:keyword/:department/:status')
+.get(staff_controller.searchStaff)
+
 
 staff_router.route('/createStaff')
 .post(staff_controller.createStaff)

@@ -1,5 +1,5 @@
 const db = require('../../connect_db')
-const md5 = require('md5')
+const md5 = require('md5');
 
 module.exports.getAllDepartment = (req, res) => {
     let sql = 'SELECT * FROM department';
@@ -71,11 +71,11 @@ module.exports.updateDepartment = (req, res) => {
 
 }
 
-module.exports.createDepartment = (req, res)=>{
+module.exports.createDepartment = (req, res) => {
     const body = req.body;
     const { id, name, maxSlot, height, numberHome, width } = body;
     let sql = 'INSERT INTO department VALUES(?, ?, ?, ?, ?, ?)'
-    db.query(sql, [id, name, maxSlot, height, numberHome, width], (err, response)=>{
+    db.query(sql, [id, name, maxSlot, height, numberHome, width], (err, response) => {
         if (err) {
             res.json({
                 status: false,
@@ -90,4 +90,65 @@ module.exports.createDepartment = (req, res)=>{
             })
         }
     })
+}
+
+module.exports.searchStaff = (req, res) => {
+    let keyword = req.params['keyword']
+    let department = req.params['department']
+    let status = req.params['status']
+
+    let department_query = null
+    let status_query = null
+
+    if(department !=  'ALL'){
+        department_query = department.split('---')[1]
+    }
+
+    if(status != 'ALL'){
+        if(status === 'Đang làm việc') status_query = 0
+        else status_query = 1
+    }
+
+    // function resResult(err, response){
+    //     if(err) res.josn({
+    //         status: false,
+    //         err: err.code,
+    //         result: []
+    //     })
+    //     else{
+    //         res.json({
+    //             status: true,
+    //             err: null,
+    //             result: response
+    //         })
+    //     }
+    // }
+
+
+    let con_keyword = keyword !=='null'? `(email like '%${keyword}%' OR fullName like '%${keyword}%')`: 1
+    let con_department = department === 'ALL'? 1: `department='${department_query}'`
+    let con_status = status === 'ALL'? 1: `status=${status_query}`
+
+    let sql = `SELECT * FROM staff WHERE ${con_keyword} AND ${con_department} AND ${con_status}`
+    console.log(sql)
+    db.query(sql, (err, response)=>{
+        if(err){
+            res.json({
+                status: false,  
+                err: err.code
+            })
+        }
+        else{
+            res.json({
+                status: true,
+                err: null,
+                result: response
+            })
+        }
+        
+    })
+
+    
+
+
 }
