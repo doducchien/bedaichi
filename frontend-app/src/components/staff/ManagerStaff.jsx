@@ -62,6 +62,10 @@ function ManagerStaff(props) {
         setDetailStaff(email)
     }
 
+    const closeDetailStaff = ()=>{
+        setDetailStaff(null)
+    }
+
     useEffect(()=>{
         let {keyword, department, status} = searchMode
         if(keyword === '') keyword = null
@@ -128,7 +132,7 @@ function ManagerStaff(props) {
 
     return (
         <div className="manager-staff">
-            <div className="header">
+            <div style={detailStaff? {display: 'none'}: null} className="header">
                 <input name='keyword' onChange={onChangeKeyWord} type="text" placeholder='Nhập tên hoặc email...' />
 
                 <div className='department_'>
@@ -173,7 +177,7 @@ function ManagerStaff(props) {
 
             </div>
             <div className="body">
-               {detailStaff? <DetailStaff user_role={user_role} email={detailStaff}/>: <ListStaff openDetailStaff={changeDetailStaff} user_role={user_role} listStaff={listStaff} />}
+               {detailStaff? <DetailStaff closeDetailStaff={closeDetailStaff} user_role={user_role} email={detailStaff}/>: <ListStaff openDetailStaff={changeDetailStaff} user_role={user_role} listStaff={listStaff} />}
             </div>
 
         </div>

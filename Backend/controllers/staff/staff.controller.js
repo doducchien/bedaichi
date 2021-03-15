@@ -109,22 +109,6 @@ module.exports.searchStaff = (req, res) => {
         else status_query = 1
     }
 
-    // function resResult(err, response){
-    //     if(err) res.josn({
-    //         status: false,
-    //         err: err.code,
-    //         result: []
-    //     })
-    //     else{
-    //         res.json({
-    //             status: true,
-    //             err: null,
-    //             result: response
-    //         })
-    //     }
-    // }
-
-
     let con_keyword = keyword !=='null'? `(email like '%${keyword}%' OR fullName like '%${keyword}%')`: 1
     let con_department = department === 'ALL'? 1: `department='${department_query}'`
     let con_status = status === 'ALL'? 1: `status=${status_query}`
@@ -148,7 +132,20 @@ module.exports.searchStaff = (req, res) => {
         
     })
 
-    
+}
 
-
+module.exports.getDetailStaff = (req, res)=>{
+    const email = req.params['email']
+    const sql = 'SELECT * FROM staff WHERE email=?'
+    db.query(sql, [email], (err, response)=>{
+        if(err) res.json({
+            status: false,
+            err: err.code
+        })
+        else res.json({
+            status: true,
+            err: null,
+            result: response[0]
+        })
+    })
 }

@@ -6,7 +6,7 @@ const staff_controller = require('../../controllers/staff/staff.controller')
 
 staff_router.use((req, res, next)=>{
     const user_role = req.headers.user_role
-    console.log(user_role)
+    console.log('from staff.route in middelware: ' + user_role)
   
     if(user_role === 'admin' || user_role === 'staff') next()
     else{
@@ -24,6 +24,8 @@ staff_router.route('/getDepartment/:id')
 
 staff_router.route('/searchStaff/:keyword/:department/:status')
 .get(staff_controller.searchStaff)
+staff_router.route('/getDetailStaff/:email')
+.get(staff_controller.getDetailStaff)
 
 
 staff_router.route('/createStaff')
