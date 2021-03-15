@@ -1,0 +1,180 @@
+
+create database hrm;
+use hrm;
+create table user(
+	email varchar(200),
+    fullName nvarchar(200),
+    phoneNumber varchar(20),
+    birthday varchar(30),
+    sex tinyint,
+    type varchar(20),
+    password varchar(100)
+);
+
+create table staff(
+	email varchar(200),
+    fullName nvarchar(200),
+    phoneNumber varchar(20),
+    birthday varchar(30),
+    sex tinyint,
+    image varchar(300),
+    department varchar(100),
+    position varchar(100),
+    joinDay varchar(30),
+    leftDay varchar(30),
+    status tinyint,
+    note text
+);
+
+create table timeKeeping(
+	email varchar(200),
+    time varchar(30),
+    numberWorkDays tinyint,
+    numberOvertimeDays tinyint
+);
+
+create table unitSalary(
+	email varchar(200),
+	basicSalary varchar(20),
+    overtimeSalary varchar(20),
+    allowance varchar(20),
+    performanceBonus varchar(20),
+    attendanceBonus varchar(20),
+    completedBonus varchar(20),
+    awarenessBonus varchar(20),
+    note text
+);
+
+create table totalSalary(
+	email varchar(200),
+    time varchar(30),
+    basicSalary varchar(200),
+    overtimeSalary varchar(200),
+    allowance varchar(20),
+    performanceBonus varchar(20),
+    attendanceBonus varchar(20),
+    completedBonus varchar(20),
+    awarenessBonus varchar(20),
+    totalSalary varchar(20),
+    advanceSalary varchar(20),
+    note text
+);
+
+create table product(
+	id varchar(30),
+    name nvarchar(300),
+    value varchar(20),
+    time varchar(30),
+    isComplete boolean
+);
+
+create table staffProduct(
+	id varchar(30),
+    email varchar(200),
+    discount varchar(20)
+
+);
+
+create table statusProduct(
+	id varchar(30),
+	dong boolean,
+    suon boolean,
+    keogay boolean,
+    xen boolean,
+    ep boolean,
+    dongThung boolean
+
+);
+
+create table customer(
+	email varchar(200),
+    fullName nvarchar(200),
+    company text
+);
+
+create table awareness(
+	email varchar(200),
+    time varchar(30),
+    tool tinyint,
+    selfReportErr tinyint,
+    overOnRequest tinyint,
+    ontime tinyint,
+    latehours tinyint,
+    leaveWithPermission tinyint,
+    leaveWithoutPermission tinyint,
+    leaveSpecial tinyint,
+    forgotCheckin tinyint,
+    note text
+);
+
+create table regime(
+	email varchar(200),
+    time varchar(30),
+    nameRegime text,
+    value varchar(20),
+    ispaid boolean,
+    note text
+);
+
+
+
+create table ordered(
+	email varchar(200),
+    time varchar(30),
+    id varchar(30),
+    price varchar(20),
+    paid varchar(20),
+	note text
+    
+);
+
+-- primary key
+alter table user add primary key(email);
+alter table staff add primary key(email);
+alter table unitSalary add primary key(email);
+alter table timekeeping add primary key(email, time);
+alter table totalSalary add primary key(email, time);
+
+alter table product add primary key(id);
+alter table staffProduct add primary key(id, email);
+alter table statusProduct add primary key(id);
+alter table customer add primary key(email);
+alter table awareness add primary key(email, time);
+alter table ordered add primary key(email, id);
+
+-- foregin key
+alter table timeKeeping add foreign key(email) references staff(email);
+alter table unitSalary add foreign key(email) references staff(email);
+alter table totalSalary add foreign key(email) references staff(email);
+alter table awareness add foreign key(email) references staff(email);
+alter table staffProduct add foreign key(email) references staff(email);
+alter table regime add foreign key(email) references staff(email);
+
+alter table statusProduct add foreign key(id) references product(id);
+alter table staffProduct add foreign key(id) references product(id);
+alter table ordered add foreign key(id) references product(id);
+alter table statusProduct add foreign key(id) references product(id);
+alter table statusProduct add foreign key(id) references product(id);
+
+create table hrm.department(
+	id varchar(10),
+    name nvarchar(150)
+);
+
+alter table hrm.department add column maxSlot int;
+alter table hrm.department add column width float;
+alter table hrm.department add column height float;
+alter table hrm.department add column numberHome int;
+
+alter table hrm.department add primary key(id);
+alter table hrm.staff add foreign key(department) references hrm.department(id);
+
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '220699';
+flush privileges;
+
+
+
+
+
+
