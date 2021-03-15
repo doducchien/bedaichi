@@ -9,6 +9,9 @@ import axios from 'axios'
 //btn
 import Button from '@material-ui/core/Button';
 
+//component
+import PopupChangeStaff from './PopupChangeStaff'
+
 
 function DetailStaff(props) {
     const { user_role, email, closeDetailStaff } = props
@@ -26,7 +29,17 @@ function DetailStaff(props) {
         status: '',
         note: ''
     })
-    // console.log(user_role);
+
+    const [openChangeStaff, setOpenChangeStaff] = useState(false)
+
+    const closeChangeStaff = ()=>{
+        setOpenChangeStaff(false)
+    }
+
+    const changeStaff = ()=>{
+        setOpenChangeStaff(true)
+    }
+
     useEffect(() => {
         const route = constraints.server + `/staff/getDetailStaff/${email}`
         axios.get(route, {
@@ -48,15 +61,15 @@ function DetailStaff(props) {
         <div className="detail-staff">
             <div className="above">
                 <div className="left">
-                    <p>email:{infomationStaff.email}</p>
+                    <p>Email:{infomationStaff.email}</p>
                     <p>Họ và tên:{infomationStaff.fullName}</p>
                     <p>Số điện thoại: {infomationStaff.phoneNumber}</p>
-                    <p>Ngày sinh: {infomationStaff.birthday}</p>
+                    <p>Ngày sinh: {constraints.changeIntToTime(infomationStaff.birthday)}</p>
                     <p>Giới tính: {infomationStaff.sex}</p>
                     <p>Phòng ban: {infomationStaff.department}</p>
-                    <p>Ngày tham gia: {infomationStaff.joinDay}</p>
-                    <p>Ngày nghỉ việc: {infomationStaff.leftDay}</p>
-                    <p>Trạng thái: {infomationStaff.status}</p>
+                    <p>Ngày tham gia: {constraints.changeIntToTime(infomationStaff.joinDay)}</p>
+                    <p>Ngày nghỉ việc: {infomationStaff.leftDay? constraints.changeIntToTime(infomationStaff.leftDay): ''}</p>
+                    <p>Trạng thái: {infomationStaff.status === '0'? 'Đang làm việc': 'Đã nghỉ việc'}</p>
 
                 </div>
                 <div className="right">
@@ -68,13 +81,13 @@ function DetailStaff(props) {
                 <p>Ghi chú: {infomationStaff.note}</p>
                 <div className="btns_">
                     <Button onClick={()=>closeDetailStaff()} style={{width: '200px', height: '50px'}} variant="contained" >Đóng</Button>
-                    <Button style={{width: '200px', height: '50px'}} variant="contained" color="secondary">Chỉnh sửa</Button>
+                    <Button onClick={changeStaff} style={{width: '200px', height: '50px'}} variant="contained" color="secondary">Chỉnh sửa</Button>
                     <Button style={{width: '200px', height: '50px'}} variant="contained" color="primary">Xuất file</Button>
-
-
 
                 </div>
             </div>
+
+            <PopupChangeStaff infomationStaff={infomationStaff} closeChangeStaff={closeChangeStaff} openChangeStaff={openChangeStaff} />
 
         </div>
     )

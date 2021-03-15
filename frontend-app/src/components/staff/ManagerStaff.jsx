@@ -36,6 +36,8 @@ function ManagerStaff(props) {
     const [listStaff, setListStaff] = useState([])
 
     const [listDepartment, setListDepartment] = useState([])
+
+
     useEffect(()=>{
         const route = constraints.server + '/staff/getAllDepartment';
         axios.get(route, {
