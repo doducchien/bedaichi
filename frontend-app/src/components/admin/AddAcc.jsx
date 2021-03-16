@@ -9,15 +9,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { Button } from '@material-ui/core';
 
-//icons
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import EmailIcon from '@material-ui/icons/Email';
-import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk';
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import WcIcon from '@material-ui/icons/Wc';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import RepeatIcon from '@material-ui/icons/Repeat';
-import SortIcon from '@material-ui/icons/Sort';
 
 
 //alert
@@ -34,7 +25,7 @@ import Popup from './Popup'
 
 
 function AddAcc(props) {
-    const {user_role} = props
+    const { user_role } = props
 
     const [dataAdd, setDataAdd] = useState({
         user_role: user_role,
@@ -77,26 +68,26 @@ function AddAcc(props) {
                 birthday: constraints.changeTimeToInt(dataAdd.birthday)
             }
             const route = constraints.server + '/onlyAdmin/addAcc';
-            axios.post(route, dataAdd_,{
-                headers:{
+            axios.post(route, dataAdd_, {
+                headers: {
                     'user_role': user_role
                 }
             })
-                .then( async res => {
+                .then(async res => {
                     const data = await res.data
-                    const result_ = {...result, open: true}
+                    const result_ = { ...result, open: true }
                     console.log(data)
-                    if(data.status === false){
-                        
+                    if (data.status === false) {
+
                         result_.title = 'Tạo tài khoản thất bại'
-                        if(data.errCode === 'ER_DUP_ENTRY'){
+                        if (data.errCode === 'ER_DUP_ENTRY') {
                             result_.content = 'Email đã có tài khoản khác sử dụng. Vui lòng dùng email khác'
                         }
-                        else{
+                        else {
                             result_.content = 'Đã có lỗi xảy ra, vui lòng thử lại'
                         }
                     }
-                    else{
+                    else {
                         result_.title = 'Tạo tài khoản thành công'
                         result_.content = 'Tài khoản đã được tạo và phân quyền trên hệ thống. Hãy cung cấp nó cho nhân viên tương ứng sử dụng'
 
@@ -136,36 +127,27 @@ function AddAcc(props) {
         <div className="add-acc">
 
             <div className='text-input'>
-                <Grid style={{ width: '100%' }} container spacing={1} alignItems="flex-end">
-                    <Grid item>
-                        <EmailIcon style={{ color: 'green' }} />
-                    </Grid>
-                    <Grid style={{ width: 'calc(100% - 40px)' }} item>
-                        <TextField onChange={onChangeInput} name='email' style={{ width: '100%' }} id="input-with-icon-grid" label="Email" />
-                    </Grid>
-                </Grid>
+
+
+
+                <TextField onChange={onChangeInput} name='email' style={{ width: '100%' }} id="input-with-icon-grid" label="Email" />
+
             </div>
 
             <div className='text-input'>
-                <Grid style={{ width: '100%' }} container spacing={1} alignItems="flex-end">
-                    <Grid item>
-                        <AccountCircle style={{ color: 'red' }} />
-                    </Grid>
-                    <Grid style={{ width: 'calc(100% - 40px)' }} item>
-                        <TextField onChange={onChangeInput} name='fullName' style={{ width: '100%' }} id="input-with-icon-grid" label="Họ và tên" />
-                    </Grid>
-                </Grid>
+
+
+
+                <TextField onChange={onChangeInput} name='fullName' style={{ width: '100%' }} id="input-with-icon-grid" label="Họ và tên" />
+
             </div>
 
             <div className='text-input'>
-                <Grid style={{ width: '100%' }} container spacing={1} alignItems="flex-end">
-                    <Grid item>
-                        <PhoneInTalkIcon style={{ color: 'blue' }} />
-                    </Grid>
-                    <Grid style={{ width: 'calc(100% - 40px)' }} item>
-                        <TextField onChange={onChangeInput} name='phoneNumber' style={{ width: '100%' }} id="input-with-icon-grid" label="Số điện thoại" />
-                    </Grid>
-                </Grid>
+
+
+
+                <TextField onChange={onChangeInput} name='phoneNumber' style={{ width: '100%' }} id="input-with-icon-grid" label="Số điện thoại" />
+
             </div>
 
 
@@ -178,15 +160,10 @@ function AddAcc(props) {
                     onChange={onChangeInput}
                     style={{ width: '100%' }}
                     type='date'
-                    id="input-with-icon-textfield"
+                    InputLabelProps={{ shrink: true }}
+
                     label="Ngày sinh"
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <DateRangeIcon style={{ color: '#128C7E' }} />
-                            </InputAdornment>
-                        ),
-                    }}
+                    
                 />
 
             </div>
@@ -196,17 +173,11 @@ function AddAcc(props) {
                     name='sex'
                     onChange={onChangeInput}
                     style={{ width: '250px' }}
-                    id="standard-select-currency"
+                
                     select
                     defaultValue={dataAdd.sex}
                     label="Giới tính"
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <WcIcon style={{ color: 'purple' }} />
-                            </InputAdornment>
-                        ),
-                    }}
+                    
                 >
                     {constraints.sexes.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -219,17 +190,11 @@ function AddAcc(props) {
                     name='type'
                     onChange={onChangeInput}
                     style={{ width: '250px' }}
-                    id="standard-select-currency"
+                   
                     select
                     defaultValue={dataAdd.sex}
                     label="Phân quyền"
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SortIcon style={{ color: 'purple' }} />
-                            </InputAdornment>
-                        ),
-                    }}
+                   
                 >
                     {constraints.types.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -242,25 +207,15 @@ function AddAcc(props) {
 
 
             <div className='text-input'>
-                <Grid style={{ width: '100%' }} container spacing={1} alignItems="flex-end">
-                    <Grid item>
-                        <VpnKeyIcon style={{ color: '#F40083' }} />
-                    </Grid>
-                    <Grid style={{ width: 'calc(100% - 40px)' }} item>
+                
                         <TextField onChange={onChangeInput} name='password' type='password' style={{ width: '100%' }} id="input-with-icon-grid" label="Mật khẩu" />
-                    </Grid>
-                </Grid>
+             
             </div>
 
             <div className="text-input">
-                <Grid style={{ width: '100%' }} container spacing={1} alignItems="flex-end">
-                    <Grid item>
-                        <RepeatIcon style={{ color: 'green' }} />
-                    </Grid>
-                    <Grid style={{ width: 'calc(100% - 40px)' }} item>
+               
                         <TextField onChange={onChangeInput} name='repassword' type='password' style={{ width: '100%' }} label="Nhập lại mật khẩu..." />
-                    </Grid>
-                </Grid>
+                
             </div>
 
 

@@ -37,6 +37,9 @@ staff_router.route('/createDepartment')
 staff_router.route('/updateDepartment')
 .put(staff_controller.updateDepartment)
 
+staff_router.route('/updateStaff').
+put(staff_controller.updateStaff)
+
 
 
 

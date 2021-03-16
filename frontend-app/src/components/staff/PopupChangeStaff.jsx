@@ -1,7 +1,7 @@
 
 
 //react dialog
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,19 +13,17 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 
 
-//date picker
-import {
-    MuiPickersUtilsProvider,
-    KeyboardTimePicker,
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
+
 
 //contraints
 import * as constraints from '../../constraints'
 
+//axios
+import axios from 'axios';
+
 
 function PopupChangeStaff(props) {
-    const { openChangeStaff, closeChangeStaff, infomationStaff } = props
+    const { openChangeStaff, closeChangeStaff, infomationStaff, user_role } = props
     const {
         email,
         fullName,
@@ -40,6 +38,31 @@ function PopupChangeStaff(props) {
         note
     } = infomationStaff
 
+    const [infomationInput, setInfomationInput] = useState(null)
+
+    const [listDepartment, setListDepartment] = useState([])
+
+
+    useEffect(() => {
+        setInfomationInput({ ...infomationStaff })
+    }, [infomationStaff])
+    useEffect(() => {
+        const route = constraints.server + '/staff/getAllDepartment';
+        axios.get(route, {
+            headers: {
+                'user_role': user_role
+            }
+        })
+            .then(async res => {
+                const list = await res.data.map(item => {
+                    return {
+                        value: item.id,
+                        label: item.name
+                    }
+                })
+                setListDepartment(list)
+            })
+    }, [])
 
     const changeToInputTime = (day) => {
         const timeString = constraints.changeIntToTime(day)
@@ -49,15 +72,36 @@ function PopupChangeStaff(props) {
         return inputTime
     }
 
-    const convertSex = (sex) => {
-        let sexInput = ''
-        constraints.sexes.forEach(item => {
-            console.log(item.value == sex)
-            if (item.value == sex) {
-                sexInput = item.label
+
+    const handleChangeInput = (event) => {
+        let { name, value } = event.target
+        if(name === 'birthday' || name === 'joinDay' || name === 'leftDay'){
+            value = constraints.changeTimeToInt(value)
+        }
+        console.log(name, value)
+        let input_ = {
+            ...infomationInput,
+            [name]: value
+        }
+        setInfomationInput(input_)
+
+    }
+    const onUpdate = () => {
+        let body = { ...infomationInput }
+        console.log(body)
+
+        const route = constraints.server + '/staff/updateStaff'
+        axios.put(route, body, {
+            headers: {
+                'user_role': user_role
             }
         })
-        return sexInput
+            .then(res => {
+                if (res.data.status) alert("Chỉnh sửa thông tin thành công !")
+                else alert("Chỉnh sửa thông tin thất bại !Vui lòng thử lại")
+
+                closeChangeStaff()
+            })
     }
 
     return (
@@ -66,32 +110,40 @@ function PopupChangeStaff(props) {
             <Dialog open={openChangeStaff} onClose={() => closeChangeStaff()} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Chỉnh sửa thông tin nhân viên</DialogTitle>
                 <DialogContent>
-                    <DialogContentText style={{textAlign: 'center'}}>
-                        <img style={{height: '200px', borderRadius: '20px'}} src={image}/>
+                    <DialogContentText style={{ textAlign: 'center' }}>
+                        <img style={{ height: '200px', borderRadius: '20px' }} src={image} />
                     </DialogContentText>
                     <TextField
+
+
                         disabled
                         autoFocus
                         margin="dense"
-                        id="name"
+
                         label="Email"
                         type="email"
                         fullWidth
                         defaultValue={email}
+                        InputLabelProps
                     />
+
                     <TextField
+                        onChange={handleChangeInput}
+                        name='fullName'
                         autoFocus
                         margin="dense"
-                        id="name"
+
                         label="Họ và tên"
                         type="text"
                         fullWidth
                         defaultValue={fullName}
                     />
                     <TextField
+                        onChange={handleChangeInput}
+                        name='phoneNumber'
                         autoFocus
                         margin="dense"
-                        id="name"
+
                         label="Số điện thoại"
                         type="text"
                         fullWidth
@@ -99,9 +151,11 @@ function PopupChangeStaff(props) {
                     />
 
                     <TextField
+                        onChange={handleChangeInput}
+                        name='birthday'
                         autoFocus
                         margin="dense"
-                        id="name"
+
                         label="Ngày sinh"
                         hiddenLabel
                         type="date"
@@ -109,7 +163,9 @@ function PopupChangeStaff(props) {
                         defaultValue={changeToInputTime(birthday)}
                     />
                     <TextField
-                        id="standard-select-currency"
+                        onChange={handleChangeInput}
+                        name='sex'
+
                         select
                         label="Giới tính"
                         defaultValue={sex}
@@ -124,37 +180,54 @@ function PopupChangeStaff(props) {
                     </TextField>
 
                     <TextField
+                        onChange={handleChangeInput}
+                        name='department'
                         autoFocus
                         margin="dense"
-                        id="name"
+
                         label="Phòng ban"
-                        type="text"
+                        select
                         fullWidth
                         defaultValue={department}
-                    />
+                    >
+                        {listDepartment.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+
+                    </TextField>
+
+
+
                     <TextField
+                        onChange={handleChangeInput}
+                        name='joinDay'
                         autoFocus
                         margin="dense"
-                        id="name"
+
                         label="Ngày tham gia"
                         type="date"
                         fullWidth
                         defaultValue={changeToInputTime(joinDay)}
                     />
                     <TextField
+                        onChange={handleChangeInput}
+                        name='leftDay'
                         autoFocus
                         margin="dense"
-                        id="name"
+
                         label="Ngày nghỉ việc"
                         InputLabelProps={{ shrink: true }}
                         type="date"
                         fullWidth
                         defaultValue={leftDay ? changeToInputTime(leftDay) : null}
                     />
-                    
+
 
                     <TextField
-                        id="standard-select-currency"
+                        onChange={handleChangeInput}
+                        name='status'
                         select
                         label="Select"
                         defaultValue={status}
@@ -162,16 +235,31 @@ function PopupChangeStaff(props) {
                         fullWidth
                     >
                         {constraints.statusWork.map((option) => (
+
                             <MenuItem key={option.value} value={option.value}>
                                 {option.label}
                             </MenuItem>
                         ))}
                     </TextField>
 
+                    <TextField
+                        onChange={handleChangeInput}
+                        name='image'
+                        autoFocus
+                        margin="dense"
+
+                        label="Link ảnh"
+                        type="text"
+                        fullWidth
+                        defaultValue={image}
+                    />
+
+                    
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => closeChangeStaff()} color="primary">Hủy</Button>
-                    <Button onClick={() => closeChangeStaff()} color="primary">Cập nhật</Button>
+                    <Button onClick={onUpdate} color="primary">Cập nhật</Button>
                 </DialogActions>
             </Dialog>
         </div>

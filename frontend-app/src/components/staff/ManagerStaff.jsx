@@ -36,6 +36,7 @@ function ManagerStaff(props) {
     const [listStaff, setListStaff] = useState([])
 
     const [listDepartment, setListDepartment] = useState([])
+    
 
 
     useEffect(()=>{
@@ -82,7 +83,7 @@ function ManagerStaff(props) {
         
             if(data.status) setListStaff(data.result)
         })
-    }, [searchMode])
+    }, [searchMode, detailStaff])
 
 
 

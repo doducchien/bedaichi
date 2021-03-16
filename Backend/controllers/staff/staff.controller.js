@@ -1,5 +1,6 @@
 const db = require('../../connect_db')
 const md5 = require('md5');
+const { response } = require('express');
 
 module.exports.getAllDepartment = (req, res) => {
     let sql = 'SELECT * FROM department';
@@ -147,5 +148,36 @@ module.exports.getDetailStaff = (req, res)=>{
             err: null,
             result: response[0]
         })
+    })
+}
+
+module.exports.updateStaff = (req, res)=>{
+    const {
+        email,
+        fullName,
+        phoneNumber,
+        birthday,
+        sex,
+        image,
+        department,
+        joinDay,
+        leftDay,
+        status,
+        note
+    } = req.body
+    console.log(req.body)
+    let sql = 'UPDATE staff SET fullName=?, phoneNumber=?, birthday=?, sex=?, image=?, department=?, joinDay=?, leftDay=?, status=?  WHERE email=?'
+    db.query(sql, [fullName,phoneNumber,birthday,sex,image,department,joinDay,leftDay,status, email], (err, response)=>{
+        if(err) res.json({
+            status: false,
+            err: err.code
+        })
+        else{
+            res.json({
+                status: true,
+                err: null,
+                response: response
+            })
+        }
     })
 }

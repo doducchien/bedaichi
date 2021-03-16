@@ -96,36 +96,42 @@ export const position = [
         value: 'printFile',
         label: 'Xử lý in file'
     },
-   
-    
+
+
 ]
-    
+
 
 
 
 //functions
-export const changeTimeToInt = (date)=>{
-    const d = date.split('-')
-    console.log(d[0], d[1], d[2])
+export const changeTimeToInt = (date) => {
+    if(date){
+        const d = date.split('-')
+        console.log(d[0], d[1], d[2])
+    
+        return new Date(parseInt(d[0]), parseInt(d[1]) - 1, parseInt(d[2])).getTime();
+    }
+    return null
+    
 
-    return new Date(d[0], d[1] - 1, d[2]).getTime();
+
 }
 
-export const changeIntToTime = (int)=>{
+export const changeIntToTime = (int) => {
     const d = new Date()
     d.setTime(int)
-    const mm = d.getMonth() < 9? '0' + (d.getMonth() + 1): (d.getMonth() + 1)
-    const dd = d.getDate() < 10? '0' + d.getDate(): d.getDate()
+    const mm = d.getMonth() < 9 ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1)
+    const dd = d.getDate() < 10 ? '0' + d.getDate() : d.getDate()
     const yyyy = d.getFullYear();
 
     const date = dd + '-' + mm + '-' + yyyy;
     return date;
-    
+
 }
 
-export const randomID = ()=>{
+export const randomID = () => {
     let id = '';
-    for(let i = 0; i < 10; i++){
+    for (let i = 0; i < 10; i++) {
         id += `${Math.floor(Math.random() * 10)}`
     }
     return id;

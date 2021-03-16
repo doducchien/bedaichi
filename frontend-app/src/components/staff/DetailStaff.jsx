@@ -31,12 +31,14 @@ function DetailStaff(props) {
     })
 
     const [openChangeStaff, setOpenChangeStaff] = useState(false)
+    const [listDepartment, setListDepartment] = useState([])
 
-    const closeChangeStaff = ()=>{
+
+    const closeChangeStaff = () => {
         setOpenChangeStaff(false)
     }
 
-    const changeStaff = ()=>{
+    const changeStaff = () => {
         setOpenChangeStaff(true)
     }
 
@@ -54,7 +56,26 @@ function DetailStaff(props) {
                     setInfomationStaff(data.result)
                 }
             })
-    }, [email])
+    }, [email, openChangeStaff])
+
+    
+    useEffect(() => {
+        const route = constraints.server + '/staff/getAllDepartment';
+        axios.get(route, {
+            headers: {
+                'user_role': user_role
+            }
+        })
+            .then(async res => {
+                const list = await res.data.map(item => {
+                    return {
+                        value: item.id,
+                        label: item.name
+                    }
+                })
+                setListDepartment(list)
+            })
+    }, [])
 
 
     return (
@@ -65,11 +86,20 @@ function DetailStaff(props) {
                     <p>Họ và tên:{infomationStaff.fullName}</p>
                     <p>Số điện thoại: {infomationStaff.phoneNumber}</p>
                     <p>Ngày sinh: {constraints.changeIntToTime(infomationStaff.birthday)}</p>
-                    <p>Giới tính: {infomationStaff.sex}</p>
-                    <p>Phòng ban: {infomationStaff.department}</p>
+                    <p>Giới tính: {constraints.sexes.map(item => {
+                        if (parseInt(item.value) == parseInt(infomationStaff.sex)) return item.label
+                    })}</p>
+                    <p>Phòng ban: {listDepartment.map(item => {
+                        if (item.value == infomationStaff.department) return item.label
+                    })}</p>
                     <p>Ngày tham gia: {constraints.changeIntToTime(infomationStaff.joinDay)}</p>
-                    <p>Ngày nghỉ việc: {infomationStaff.leftDay? constraints.changeIntToTime(infomationStaff.leftDay): ''}</p>
-                    <p>Trạng thái: {infomationStaff.status === '0'? 'Đang làm việc': 'Đã nghỉ việc'}</p>
+                    <p>Ngày nghỉ việc: {infomationStaff.leftDay ? constraints.changeIntToTime(infomationStaff.leftDay) : ''}</p>
+                    <p>Trạng thái: {constraints.statusWork.map(item => {
+
+                        if (parseInt(item.value) == parseInt(infomationStaff.status)) return item.label
+
+                    })}
+                    </p>
 
                 </div>
                 <div className="right">
@@ -80,14 +110,14 @@ function DetailStaff(props) {
             <div className="under">
                 <p>Ghi chú: {infomationStaff.note}</p>
                 <div className="btns_">
-                    <Button onClick={()=>closeDetailStaff()} style={{width: '200px', height: '50px'}} variant="contained" >Đóng</Button>
-                    <Button onClick={changeStaff} style={{width: '200px', height: '50px'}} variant="contained" color="secondary">Chỉnh sửa</Button>
-                    <Button style={{width: '200px', height: '50px'}} variant="contained" color="primary">Xuất file</Button>
+                    <Button onClick={() => closeDetailStaff()} style={{ width: '200px', height: '50px' }} variant="contained" >Đóng</Button>
+                    <Button onClick={changeStaff} style={{ width: '200px', height: '50px' }} variant="contained" color="secondary">Chỉnh sửa</Button>
+                    <Button style={{ width: '200px', height: '50px' }} variant="contained" color="primary">Xuất file</Button>
 
                 </div>
             </div>
 
-            <PopupChangeStaff infomationStaff={infomationStaff} closeChangeStaff={closeChangeStaff} openChangeStaff={openChangeStaff} />
+            <PopupChangeStaff user_role={user_role} infomationStaff={infomationStaff} closeChangeStaff={closeChangeStaff} openChangeStaff={openChangeStaff} />
 
         </div>
     )
