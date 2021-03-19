@@ -107,8 +107,6 @@ export const position = [
 export const changeTimeToInt = (date) => {
     if(date){
         const d = date.split('-')
-        console.log(d[0], d[1], d[2])
-    
         return new Date(parseInt(d[0]), parseInt(d[1]) - 1, parseInt(d[2])).getTime();
     }
     return null

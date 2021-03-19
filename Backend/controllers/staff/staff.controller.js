@@ -1,6 +1,5 @@
 const db = require('../../connect_db')
 const md5 = require('md5');
-const { response } = require('express');
 
 module.exports.getAllDepartment = (req, res) => {
     let sql = 'SELECT * FROM department';
@@ -101,45 +100,45 @@ module.exports.searchStaff = (req, res) => {
     let department_query = null
     let status_query = null
 
-    if(department !=  'ALL'){
+    if (department != 'ALL') {
         department_query = department.split('---')[1]
     }
 
-    if(status != 'ALL'){
-        if(status === 'Đang làm việc') status_query = 0
+    if (status != 'ALL') {
+        if (status === 'Đang làm việc') status_query = 0
         else status_query = 1
     }
 
-    let con_keyword = keyword !=='null'? `(email like '%${keyword}%' OR fullName like '%${keyword}%')`: 1
-    let con_department = department === 'ALL'? 1: `department='${department_query}'`
-    let con_status = status === 'ALL'? 1: `status=${status_query}`
+    let con_keyword = keyword !== 'null' ? `(email like '%${keyword}%' OR fullName like '%${keyword}%')` : 1
+    let con_department = department === 'ALL' ? 1 : `department='${department_query}'`
+    let con_status = status === 'ALL' ? 1 : `status=${status_query}`
 
     let sql = `SELECT * FROM staff WHERE ${con_keyword} AND ${con_department} AND ${con_status}`
     console.log(sql)
-    db.query(sql, (err, response)=>{
-        if(err){
+    db.query(sql, (err, response) => {
+        if (err) {
             res.json({
-                status: false,  
+                status: false,
                 err: err.code
             })
         }
-        else{
+        else {
             res.json({
                 status: true,
                 err: null,
                 result: response
             })
         }
-        
+
     })
 
 }
 
-module.exports.getDetailStaff = (req, res)=>{
+module.exports.getDetailStaff = (req, res) => {
     const email = req.params['email']
     const sql = 'SELECT * FROM staff WHERE email=?'
-    db.query(sql, [email], (err, response)=>{
-        if(err) res.json({
+    db.query(sql, [email], (err, response) => {
+        if (err) res.json({
             status: false,
             err: err.code
         })
@@ -151,7 +150,7 @@ module.exports.getDetailStaff = (req, res)=>{
     })
 }
 
-module.exports.updateStaff = (req, res)=>{
+module.exports.updateStaff = (req, res) => {
     const {
         email,
         fullName,
@@ -167,16 +166,79 @@ module.exports.updateStaff = (req, res)=>{
     } = req.body
     console.log(req.body)
     let sql = 'UPDATE staff SET fullName=?, phoneNumber=?, birthday=?, sex=?, image=?, department=?, joinDay=?, leftDay=?, status=?  WHERE email=?'
-    db.query(sql, [fullName,phoneNumber,birthday,sex,image,department,joinDay,leftDay,status, email], (err, response)=>{
-        if(err) res.json({
+    db.query(sql, [fullName, phoneNumber, birthday, sex, image, department, joinDay, leftDay, status, email], (err, response) => {
+        if (err) res.json({
             status: false,
             err: err.code
         })
-        else{
+        else {
             res.json({
                 status: true,
                 err: null,
                 response: response
+            })
+        }
+    })
+}
+
+module.exports.createAttendance = (req, res) => {
+    const { time, email } = req.body
+    let sql = 'INSERT INTO timeKeeping VALUES(?, ?)'
+    db.query(sql, [email, String(time)], (err, response) => {
+        if (err) {
+            console.log(err)
+            res.json({
+                status: false,
+                err: err.code
+            })
+        }
+        else res.json({
+            status: true,
+            err: null,
+            result: response
+        })
+    })
+}
+
+
+module.exports.checkAttendance = (req, res) => {
+    const email = req.params['email']
+    const time = req.params['time']
+    let sql = 'SELECT * FROM timeKeeping WHERE email=? AND time=?'
+    db.query(sql, [email, String(time)], (err, response) => {
+        console.log(response)
+        if (err) {
+            res.json({
+                status: false,
+                err: err.code,
+            })
+        }
+        else {
+            res.json({
+                status: true,
+                err: null,
+                result: response.length
+            })
+        }
+    })
+    console.log(email, time)
+}
+
+module.exports.getListAttendance = (req, res)=>{
+    const time = req.params['time']
+    let sql = 'SELECT * FROM timeKeeping WHERE time=?'
+    db.query(sql, [time], (err, response)=>{
+        if (err) {
+            res.json({
+                status: false,
+                err: err.code,
+            })
+        }
+        else{
+            res.json({
+                status: true,
+                err: null,
+                result: response
             })
         }
     })

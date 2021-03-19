@@ -24,15 +24,25 @@ staff_router.route('/getDepartment/:id')
 
 staff_router.route('/searchStaff/:keyword/:department/:status')
 .get(staff_controller.searchStaff)
+
 staff_router.route('/getDetailStaff/:email')
 .get(staff_controller.getDetailStaff)
 
+staff_router.route('/checkAttendance/:email/:time')
+.get(staff_controller.checkAttendance)
+
+staff_router.route('/getListAttendance/:time')
+.get(staff_controller.getListAttendance)
 
 staff_router.route('/createStaff')
 .post(staff_controller.createStaff)
 
 staff_router.route('/createDepartment')
 .post(staff_controller.createDepartment)
+
+staff_router.route('/createAttendance')
+.post(staff_controller.createAttendance)
+
 
 staff_router.route('/updateDepartment')
 .put(staff_controller.updateDepartment)
