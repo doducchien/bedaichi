@@ -123,7 +123,7 @@ function ManagerTimeWork(props) {
                         className='date-picker_'
                         label="Chọn ngày điểm danh"
                         format="MM/dd/yyyy"
-                        defaultValue={selectedDate}
+                        value={selectedDate}
                         onChange={handleDateChange}
                         KeyboardButtonProps={{
                             'aria-label': 'change date',

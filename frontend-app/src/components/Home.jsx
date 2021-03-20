@@ -9,6 +9,7 @@ import 'material-icons/iconfont/material-icons.scss';
 import Menu from './Menu'
 import Admin from './admin/Admin'
 import Staff from './staff/Staff'
+import Regime from './regime/Regime'
 
 
 function Home() {
@@ -27,6 +28,10 @@ function Home() {
 
                 {
                     position == 'staff'? <Staff />: ''
+                }
+
+                {
+                    position === 'regime'? <Regime />: ''
                 }
                 
             </div>
