@@ -127,6 +127,11 @@ create table ordered(
     
 );
 
+create table typeRegime(
+	id varchar(30),
+    name nvarchar(200)
+);
+
 -- primary key
 alter table user add primary key(email);
 alter table staff add primary key(email);
@@ -167,6 +172,20 @@ alter table hrm.department add column numberHome int;
 
 alter table hrm.department add primary key(id);
 alter table hrm.staff add foreign key(department) references hrm.department(id);
+
+alter table regime drop column nameRegime;
+alter table regime drop column value;
+alter table regime drop column ispaid;
+
+alter table typeRegime add primary key(id);
+
+alter table regime add column id varchar(30);
+-- alter table regime drop primary key;
+alter table regime add primary key(id, email, time);
+
+alter table regime add foreign key(id) references typeRegime(id);
+
+alter table typeRegime add column note text;
 
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '220699';
