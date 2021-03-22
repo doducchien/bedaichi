@@ -59,7 +59,7 @@ function ManagerRegime(props) {
                 </div>
             </>
             :
-                <DetailRegime user_role={user_role} idRegime={idRegime}/>
+                <DetailRegime setIdRegime={setIdRegime} user_role={user_role} idRegime={idRegime}/>
             }
 
         </div>

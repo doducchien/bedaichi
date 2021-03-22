@@ -100,6 +100,59 @@ export const position = [
 
 ]
 
+export const awareness = [
+    {
+        value: 'tool',
+        label: 'Dụng cụ',
+        note: 'Danh sách những người sử dụng dụng cụ sai quy định'
+    },
+
+    {
+        value: 'selfReportErr',
+        label: 'Tự phát hiện và báo cáo lỗi'
+    },
+
+    {
+        value: 'overOnRequest',
+        label: 'Tăng ca theo yêu cầu'
+    },
+
+    {
+        value: 'ontime',
+        label: 'Đi làm đúng giờ'
+    },
+
+    {
+        value: 'latehours',
+        label: 'Đi làm muộn'
+    },
+
+    {
+        value: 'leaveWithPermission',
+        label: 'Nghỉ có phép'
+    },
+
+    {
+        value: 'leaveWithoutPermission',
+        label: 'Nghỉ không phép'
+    },
+
+    {
+        value: 'leaveSpecial',
+        label: 'Nghỉ đặc biệt'
+    },
+
+    {
+        value: 'forgotCheckin',
+        label: 'Quên checkin'
+    },
+
+    // {
+    //     value: 'note',
+    //     label: 'Ghi chú'
+    // }
+
+]
 
 
 

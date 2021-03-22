@@ -17,11 +17,22 @@ regime_router.use((req, res, next)=>{
 regime_router.route('/createTypeRegime')
 .post(regime_controller.createTypeRegime)
 
+regime_router.route('/createStaffRegime')
+.post(regime_controller.createStaffRegime)
+regime_router.route('/createStaffAwareness')
+.post(regime_controller)
+
 regime_router.route('/getAllTypeRegime')
 .get(regime_controller.getAllTypeRegime)
 
 regime_router.route('/getDetailTypeRegime/:id')
 .get(regime_controller.getDetailTypeRegime)
+
+regime_router.route('/getListStaffRegime/:id/:time')
+.get(regime_controller.getListStaffRegime)
+
+regime_router.route('/deleteStaffRegime/:email/:time/:id')
+.delete(regime_controller.deleteStaffRegime)
 
 
 
