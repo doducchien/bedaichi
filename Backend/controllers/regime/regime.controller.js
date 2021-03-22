@@ -133,12 +133,94 @@ module.exports.deleteStaffRegime = (req, res) => {
 }
 
 module.exports.createStaffAwareness = (req, res)=>{
-    const {email, time} = req.body
-    console.log(email, time)
+    const {email, time, type} = req.body
+    console.log(req.body)
     let sql = 'SELECT * FROM awareness WHERE time=? AND email=? LIMIT 1'
+    db.query(sql, [time, email], (err, response)=>{
+        if (err) {
+            console.log(err)
+            res.json({
+                status: false,
+                err: err.code,
+               
+            })
+        }
+        else {
+            if(response.length === 0){
+                sql = `INSERT INTO awareness(email, time, ${type}) VALUES(?, ?, ?)`
+                
+            }
+            else{
+                sql = `UPDATE awareness SET ${type} = 1 WHERE email=? AND time=?`
+                
+            }
+            db.query(sql, [email, time, 1], (err, response)=>{
+                if (err) {
+                    console.log(err)
+                    res.json({
+                        status: false,
+                        err: err.code,
+                       
+                    })
+                }
+                else {
+                    res.json({
+                        status: true,
+                        err: null,
+                       
+                    })
+                }
+            })
+        }
+        
+    })
 
 }
 
+module.exports.getListAwareness = (req, res)=>{
+    const {type, time} = req.params
+    let sql = `SELECT * FROM awareness WHERE time=? AND ${type}=?`
+    console.log(type, time)
+    db.query(sql, [time, 1], (err, response)=>{
+        if (err) {
+            console.log(err)
+            res.json({
+                status: false,
+                err: err.code,
+               
+            })
+        }
+        else {
+            res.json({
+                status: true,
+                err: null,
+                result: response
+            })
+        }
+    })
+}
+
+module.exports.deleteStaffAwareness = (req, res)=>{
+    const {email, time, type} = req.params
+    
+    let sql = `UPDATE awareness SET ${type}= null WHERE email=? AND time=?`
+    db.query(sql, [email, time], (err, response)=>{
+        if (err) {
+            console.log(err)
+            res.json({
+                status: false,
+                err: err.code,
+            })
+        }
+        else {
+            res.json({
+                status: true,
+                err: null,
+                result: response
+            })
+        }
+    })
+}
 
 
 

@@ -19,11 +19,15 @@ regime_router.route('/createTypeRegime')
 
 regime_router.route('/createStaffRegime')
 .post(regime_controller.createStaffRegime)
+
 regime_router.route('/createStaffAwareness')
-.post(regime_controller)
+.post(regime_controller.createStaffAwareness)
 
 regime_router.route('/getAllTypeRegime')
 .get(regime_controller.getAllTypeRegime)
+
+regime_router.route('/getListAwareness/:type/:time')
+.get(regime_controller.getListAwareness)
 
 regime_router.route('/getDetailTypeRegime/:id')
 .get(regime_controller.getDetailTypeRegime)
@@ -33,6 +37,9 @@ regime_router.route('/getListStaffRegime/:id/:time')
 
 regime_router.route('/deleteStaffRegime/:email/:time/:id')
 .delete(regime_controller.deleteStaffRegime)
+
+regime_router.route('/deleteStaffAwareness/:email/:time/:type')
+.delete(regime_controller.deleteStaffAwareness)
 
 
 
