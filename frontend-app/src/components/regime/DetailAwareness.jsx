@@ -212,14 +212,13 @@ function DetailAwareness(props) {
             </div>
             <div className="right">
                 <form onSubmit={addStaffToAwareness} className="header">
-                    <input name='email' onChange={onChangeEmail} type="text" placeholder='Email...'/>
+                    <input name='email' onChange={onChangeEmail} type="email" placeholder='Email...'/>
                     <Button type='submit' variant="outlined" color="secondary">Thêm</Button>
                 </form>
 
                 <div className="body">
                     {listStaff.map(item=>{
                         const {email, time} = item
-                        
                         return <PopupDeleteStaffAwareness key={email + time + awareness} type={awareness} email={email} time={time} user_role={user_role} setResult={setResult} />
                     })}
                 </div>
