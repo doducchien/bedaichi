@@ -10,6 +10,7 @@ import Menu from './Menu'
 import Admin from './admin/Admin'
 import Staff from './staff/Staff'
 import Regime from './regime/Regime'
+import Product from './product/Product'
 
 
 function Home() {
@@ -32,6 +33,9 @@ function Home() {
 
                 {
                     position === 'regime'? <Regime />: ''
+                }
+                {
+                    position === 'product'? <Product/>: ''
                 }
                 
             </div>

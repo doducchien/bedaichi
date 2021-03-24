@@ -1,0 +1,49 @@
+.product{
+    width: 100%;
+    height: 100%;
+
+
+    .header{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: space-around;
+        .menu_{
+            width: 220px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .product_manager{
+            background-color: #4caf50;
+        }
+        .customer{
+            background-color: #ad1457;
+        }
+      
+
+        .product_manager:hover{
+            background-color: #136153;
+        }
+        .customer:hover{
+            background-color: #0a4575;
+        }
+       
+    }
+
+    .body{
+        width: 100%;
+        height: calc(100% - 50px);
+        
+        padding: 20px;
+
+
+        
+    }
+}
