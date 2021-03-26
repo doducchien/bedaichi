@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 
 
@@ -27,29 +27,99 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 //constraints
 import * as constraints from '../../constraints'
 
-function AddProduct() {
+//axios
+import axios from 'axios';
 
+//component
+import Popup from './Popup'
+
+function AddProduct(props) {
+    const {user_role} = props
     const [formInput, setFormInput] = useState({
         name: '',
         value: '',
         time: '',
-        iscomplete: ''
+        isComplete: '0'
     })
+
+    const [result, setResult] = useState({
+        open: false,
+        title: '',
+        content: ''
+    })
+
+    const closeResult = ()=>{
+        setResult({
+            ... result,
+            open: false,
+            title: '',
+            content: ''
+        })
+    }
+
+    useEffect(() => {
+        if(result.open === false){
+            setFormInput({
+                ...formInput,
+                name: '',
+                value: '',
+                time: '',
+                isComplete: '0'
+            })
+        }
+        
+    }, [result])
+
+
 
 
    
 
     const handleChange = event =>{
         let {name, value} = event.target
-        if(name === 'time') value = constraints.changeTimeToInt(value)
         setFormInput({
             ...formInput,
-            [name]:value.trim()
+            [name]:value
         })
     }
 
-    const onSubmit = ()=>{
+    const onSubmit = (e)=>{
+        e.preventDefault()
+        const route = constraints.server + '/product/createProduct'
 
+        let date = new Date(formInput.time)
+        date.setHours(0, 0, 0 , 0)
+      
+       
+        const body = {
+            ...formInput,
+            id: constraints.randomID(),
+            time: date.getTime()
+        }
+        axios.post(route, body,{
+            headers:{
+                'user_role': user_role
+            }
+        })
+        .then(res=>{
+            const data = res.data
+            if(data.status){
+                setResult({
+                    ...result,
+                    open: true,
+                    title: 'Thông báo thêm sản phẩm',
+                    content: 'Thêm sản phẩm thành công !'
+                })
+            }
+            else{
+                setResult({
+                    ...result,
+                    open: true,
+                    title: 'Thông báo thêm sản phẩm',
+                    content: 'Thêm sản phẩm thất bại ! Vui lòng thử lại sau'
+                })
+            }
+        })
     }
 
     return (
@@ -59,6 +129,7 @@ function AddProduct() {
                 <FormControl style={{display: 'block', marginBottom: '10px'}}>
                     <InputLabel>Tên sản phẩm</InputLabel>
                     <Input
+                        required
                         fullWidth
                         autoComplete='off'
                         name="name"
@@ -76,13 +147,14 @@ function AddProduct() {
                 <FormControl style={{display: 'block', marginBottom: '10px'}}>
                     <InputLabel>Giá trị sản phẩm</InputLabel>
                     <Input
+                        required
                         autoComplete='off'
                         fullWidth
                         name="value"
                         type="text"
                         onChange={handleChange}
-                        value={formInput.value}
                         defaultValue=''
+                        
                         startAdornment={
                             <InputAdornment position="start">
                                 <AttachMoneyIcon />
@@ -94,13 +166,13 @@ function AddProduct() {
                 <FormControl style={{display: 'block', marginBottom: '10px'}}>
                     <InputLabel>Thời gian</InputLabel>
                     <Input
+                        required
                         fullWidth
                         autoComplete='off'
                         name="time"
                         type="date"
                         onChange={handleChange}
-                        defaultValue={new Date()}
-                        value={formInput.time}
+                        defaultValue=''
                         startAdornment={
                             <InputAdornment position="start">
                                 <AccountCircle />
@@ -109,7 +181,7 @@ function AddProduct() {
                     />
                 </FormControl>
 
-                <FormControl fullWidth style={{display: 'block', marginBottom: '10px'}} component="fieldset">
+                <FormControl required fullWidth style={{display: 'block', marginBottom: '10px'}} component="fieldset">
                     <FormLabel component="legend">Trạng thái</FormLabel>
                     <RadioGroup aria-label="quiz" defaultValue={formInput.iscomplete} name="isComplete" onChange={handleChange}>
                         <FormControlLabel value="1" control={<Radio />} label="Đã hoàn thành" />
@@ -118,8 +190,12 @@ function AddProduct() {
                     
                 </FormControl>
 
+
+                <Button type='submit' style={{display: 'block', margin: 'auto', width: '100px'}} variant="outlined" color="secondary">Thêm</Button>
+
                 
             </form>
+            <Popup result={result} closeResult={closeResult}/>
         </div>
     )
 }

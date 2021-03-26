@@ -20,7 +20,7 @@ function Product() {
             </div>
             <div className="body">
                 {
-                    mode === 'product'? <ManagerProduct />: ''
+                    mode === 'product'? <ManagerProduct user_role={user_role} />: ''
                 }
             </div>
         </div>

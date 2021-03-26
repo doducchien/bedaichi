@@ -1,17 +1,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 
 //component
 import AddProduct from './AddProduct'
+import ListProduct from './ListProduct'
 
 
 
@@ -62,12 +61,12 @@ const AntTab = withStyles((theme) => ({
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    padding: {
-        padding: theme.spacing(3),
-    },
+    // root: {
+    //     flexGrow: 1,
+    // },
+    // padding: {
+    //     padding: theme.spacing(3),
+    // },
     demo1: {
         backgroundColor: theme.palette.background.paper,
         color: 'black'
@@ -82,27 +81,26 @@ function TabPanel(props) {
   
     return (
       <div
+       
         role="tabpanel"
         hidden={value !== index}
         id={`scrollable-auto-tabpanel-${index}`}
         aria-labelledby={`scrollable-auto-tab-${index}`}
         {...other}
       >
-        {value === index && (
-          <Box p={3}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
+        {value === index && (<Box p={3}>{children}</Box>)}
       </div>
     );
   }
   
   TabPanel.propTypes = {
-    children: PropTypes.node,
+    // children: PropTypes.node,
     index: PropTypes.any.isRequired,
     value: PropTypes.any.isRequired,
   };
-function ManagerProduct() {
+function ManagerProduct(props) {
+    const {user_role} = props
+
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -117,13 +115,13 @@ function ManagerProduct() {
             <AppBar position="static" className={classes.demo1}>
                 <AntTabs value={value} onChange={handleChange} aria-label="ant example">
                     <AntTab label="Thêm sản phẩm" />
-                    <AntTab label="Liệt kê sản phẩm" />
-                    <AntTab label="Chiết khấu sản phẩm" />
+                    <AntTab label="Thông tin sản phẩm" />
+                    <AntTab label="Thống kê" />
                 </AntTabs>
                 {/* <Typography className={classes.padding} /> */}
             </AppBar>
-            <TabPanel value={value} index={0}><AddProduct/></TabPanel>
-            <TabPanel value={value} index={1}>Item Two</TabPanel>
+            <TabPanel value={value} index={0}><AddProduct user_role={user_role}/></TabPanel>
+            <TabPanel value={value} index={1}><ListProduct  user_role={user_role}/></TabPanel>
             <TabPanel value={value} index={2}>Item Three</TabPanel>
             <TabPanel value={value} index={3}>Item Four</TabPanel>
             <TabPanel value={value} index={4}>Item Five</TabPanel>
