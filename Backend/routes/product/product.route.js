@@ -23,6 +23,9 @@ product_router.route('/createProduct')
 product_router.route('/getAllProduct')
 .get(product_controller.getAllProduct)
 
+product_router.route('/searchProduct/:keyword')
+.get(product_controller.searchProduct)
+
 
 
 

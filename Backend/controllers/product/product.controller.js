@@ -41,3 +41,24 @@ module.exports.getAllProduct = (req, res)=>{
         }
     })
 }
+
+module.exports.searchProduct = (req, res)=>{
+    const keyword = req.params['keyword']
+    let sql = 'SELECT *  FROM product WHERE id like ? OR name like ?'
+    db.query(sql, [`%${keyword}%`, `%${keyword}%`], (err, response)=>{
+        if (err) {
+            console.log(err)
+            res.json({
+                status: false,
+                err: err.code,
+            })
+        }
+        else {
+            res.json({
+                status: true,
+                err: null,
+                result: response
+            })
+        }
+    })
+}

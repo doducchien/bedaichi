@@ -12,8 +12,23 @@ function ListProduct(props){
     const [listProduct, setListProduct] = useState([])
 
     useEffect(()=>{
-        const route = constraints.server + '/product/getAllProduct'
         if(keyword === ''){
+            const route = constraints.server + '/product/getAllProduct'
+
+            axios.get(route, {
+                headers:{
+                    'user_role': user_role
+                }
+            })
+            .then(res=>{
+                const data = res.data
+                if(data.status){
+                    setListProduct(data.result)
+                }
+            })
+        }
+        else{
+            const route = constraints.server + '/product/searchProduct/' + keyword
             axios.get(route, {
                 headers:{
                     'user_role': user_role
@@ -28,11 +43,17 @@ function ListProduct(props){
         }
     }, [keyword])
 
+    const onChangeKeyword = (e)=>{
+        const {value, name} = e.target
+        setKeyword(value.trim())
+    }
+    
+
 
     return(
         <div className="list-product">
             <div className="header">
-                <input placeholder='Nhập id hoặc tên sản phẩm...' type="text" name='keyword'/>
+                <input onChange={onChangeKeyword} placeholder='Nhập id hoặc tên sản phẩm...' type="text" name='keyword'/>
             </div>
 
             <div className="body">
