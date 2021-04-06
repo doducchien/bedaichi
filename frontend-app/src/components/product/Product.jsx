@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 
 //component
 import ManagerProduct from './ManagerProduct'
+import ManagerCustomer from './ManagerCustomer'
 
 function Product() {
     const [mode, setMode] = useState('product')
@@ -21,6 +22,10 @@ function Product() {
             <div className="body">
                 {
                     mode === 'product'? <ManagerProduct user_role={user_role} />: ''
+                }
+                {
+                    mode === 'customer'? <ManagerCustomer user_role={user_role} />: ''
+
                 }
             </div>
         </div>

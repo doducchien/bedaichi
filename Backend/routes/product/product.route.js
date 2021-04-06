@@ -26,6 +26,34 @@ product_router.route('/getAllProduct')
 product_router.route('/searchProduct/:keyword')
 .get(product_controller.searchProduct)
 
+product_router.route('/getAllCustomer')
+.get(product_controller.getAllCustomer)
+
+product_router.route('/searchCustomer/:keyword')
+.get(product_controller.searchCustomer)
+
+
+product_router.route('/getAllStaffProduct/:id')
+.get(product_controller.getAllStaffProduct)
+
+product_router.route('/getProduct/:id')
+.get(product_controller.getProduct)
+
+
+
+
+product_router.route('/createCustomer')
+.post(product_controller.addCustomer)
+
+product_router.route('/createStaffProduct')
+.post(product_controller.createStaffProduct)
+
+product_router.route('/updateInfoProduct')
+.put(product_controller.updateInfoProduct)
+
+product_router.route('/deleteStaffProduct/:id/:email')
+.delete(product_controller.deleteStaffProduct)
+
 
 
 

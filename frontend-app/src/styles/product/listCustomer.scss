@@ -1,0 +1,45 @@
+.list-customer{
+    width: 100%;
+    height: 100%;
+    padding: 0 !important;
+    .header{
+        width: 100%;
+        height: 40px;
+        input{
+            width: 100%;
+            height: 100%;
+            padding-left: 10px;
+        }
+    }
+    .body{
+        width: 100%;
+        height: calc(100% - 40px);
+        list-style: none;
+        overflow-y: auto;
+        padding: 0;
+
+        li{
+            width: 100%;
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #26a69a;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            color: white;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.4s;
+            span{
+                width: 25%;
+            }
+        }
+
+        li:hover {
+            background-color: #134d47 !important;
+        }
+    }
+}
