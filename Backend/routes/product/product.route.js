@@ -39,6 +39,12 @@ product_router.route('/getAllStaffProduct/:id')
 product_router.route('/getProduct/:id')
 .get(product_controller.getProduct)
 
+product_router.route('/getOrdered/:id')
+.get(product_controller.getOrdered)
+
+product_router.route('/getCustomer/:email')
+.get(product_controller.getCustomer)
+
 
 
 
@@ -47,6 +53,13 @@ product_router.route('/createCustomer')
 
 product_router.route('/createStaffProduct')
 .post(product_controller.createStaffProduct)
+
+product_router.route('/addOrdered')
+.post(product_controller.addOrdered)
+
+product_router.route('/updateStep')
+.update(product_controller.updateStep)
+
 
 product_router.route('/updateInfoProduct')
 .put(product_controller.updateInfoProduct)

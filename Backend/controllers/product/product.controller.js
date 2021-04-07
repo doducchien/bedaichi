@@ -84,6 +84,26 @@ module.exports.getProduct = (req, res)=>{
     })
 }
 
+module.exports.getCustomer = (req, res)=>{
+    const email = req.params.email
+    let sql = 'SELECT * FROM customer WHERE email=?'
+    db.query(sql, [email], (err, response)=>{
+        if (err) {
+            console.log(err)
+            res.json({
+                status: false,
+                err: err.code,
+            })
+        }
+        else {
+            res.json({
+                status: true,
+                err: null,
+                result: response
+            })
+        }
+    })
+}
 
 module.exports.addCustomer = (req, res) => {
     const { email, fullName, companyName } = req.body
@@ -257,5 +277,104 @@ module.exports.deleteStaffProduct = (req, res)=>{
             status: true,
             errCode: null,
         })
+    })
+}
+
+module.exports.getOrdered = (req, res)=>{
+    const id = req.params.id
+    let sql = 'SELECT * FROM  ordered WHERE id=?'
+    db.query(sql, [id], (err, response)=>{
+        if (err) {
+            console.log(err)
+            res.json({
+                status: false,
+                errCode: err.code,
+            })
+        }
+        else res.json({
+            status: true,
+            errCode: null,
+            result: response
+        })
+    })
+}
+
+module.exports.addOrdered = (req, res)=>{
+    const body = req.body
+    const {emailOrdered, fullNameOrdered, companyNameOrdered, timeOrdered, price, paid, id} = body
+    
+    let sql = 'SELECT * FROM customer WHERE email=?'
+    db.query(sql, [emailOrdered], (err, response)=>{
+        if (err) {
+            console.log(err)
+            res.json({
+                status: false,
+                errCode: err.code,
+            })
+        }
+        else {
+            if(response.length === 0){
+                res.json({
+                    status: false,
+                    errCode: null,
+                })
+            }
+            else{
+                sql = 'SELECT * FROM ordered WHERE id=? AND email=?'
+                db.query(sql, [id, emailOrdered], (err, response)=>{
+                    if (err) {
+                        console.log(err)
+                        res.json({
+                            status: false,
+                            errCode: err.code,
+                        })
+                    }
+                    else{
+                        if(response.length === 0){
+                            sql = 'INSERT INTO ordered VALUES(?,?,?,?,?,?)'
+                            db.query(sql, [emailOrdered, timeOrdered, id, price, paid, ''], (err, response)=>{
+                                if (err) {
+                                    console.log(err)
+                                    res.json({
+                                        status: false,
+                                        errCode: err.code,
+                                    })
+                                }
+                                else{
+                                    console.log('thanh cong')
+                                    res.json({
+                                        status: true,
+                                        errCode: null,
+                                  
+                                    })
+                                }
+                            })
+                            
+                        }
+                        else{
+                            console.log(body)
+                            sql = 'UPDATE ordered SET email=?, time=?, price=?, paid= ?, note=? WHERE email=? AND id=?'
+                            db.query(sql, [emailOrdered, timeOrdered, price, paid, '', emailOrdered, id], (err, response)=>{
+                                if (err) {
+                                    console.log(err)
+                                    res.json({
+                                        status: false,
+                                        errCode: err.code,
+                                    })
+                                }
+                                else{
+                                    console.log(response)
+                                    res.json({
+                                        status: true,
+                                        errCode: null,
+                                  
+                                    })
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+        }
     })
 }
