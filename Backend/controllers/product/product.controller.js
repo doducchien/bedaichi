@@ -204,8 +204,8 @@ module.exports.createStaffProduct = (req, res) => {
                 let sql = 'SELECT * FROM staffproduct WHERE email=? AND id=?'
                 db.query(sql, [emailStaff, id], (err, response) => {
                     if (response.length === 0) {
-                        sql = 'INSERT INTO staffproduct VALUES(?, ?, ?)'
-                        db.query(sql, [id, emailStaff, discount], (err, response) => {
+                        sql = 'INSERT INTO staffproduct VALUES(?, ?, ?, ?)'
+                        db.query(sql, [id, emailStaff, discount, 0], (err, response) => {
                             if (err) {
                                 console.log(err)
                                 res.json({

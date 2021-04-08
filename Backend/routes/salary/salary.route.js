@@ -21,13 +21,22 @@ salary_router.use((req, res, next)=>{
 salary_router.route('/searchStaff/:keyword')
 .get(salary_controller.searchStaff)
 
-salary_router.route('/getAllStaff')
-.get(salary_controller.getAllStaff)
+
+salary_router.route('/searchUnitSalary/:keyword')
+.get(salary_controller.searchUnitSalary)
+
+salary_router.route('/getAllStaffUnit')
+.get(salary_controller.getAllStaffUnit)
+
+salary_router.route('/getNameStaff/:email')
+.get(salary_controller.getNameStaff)
+
+salary_router.route('/getUnitSalary/:email')
+.get(salary_controller.getUnitSalary)
 
 
-salary_router.route('/getAllStaffUnitSalary')
-.get(salary_controller.getAllStaffUnitSalary)
-
+salary_router.route('/updateUnitSalary')
+.put(salary_controller.updateUnitSalary)
 
 
 

@@ -213,6 +213,21 @@ FOR EACH ROW
         isComplete = 0
 
 
+alter table hrm.unitsalary add column setted tinyint;
+
+use hrm;
+CREATE trigger after_insert_staff
+AFTER INSERT ON hrm.staff 
+FOR EACH ROW
+
+	INSERT INTO hrm.unitsalary
+    SET email = New.email, setted = 0;
+
+
+alter table hrm.staffproduct add column ispaid tinyint;
+
+
+
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '220699';
 flush privileges;
 
