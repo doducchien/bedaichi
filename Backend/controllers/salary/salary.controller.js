@@ -127,3 +127,79 @@ module.exports.getUnitSalary = (req, res)=>{
         }
     })
 }
+
+
+module.exports.getAllTotalSalary = (req, res)=>{
+    const time = req.params.time
+    console.log(time)
+    let sql = 'SELECT * FROM totalsalary WHERE time=?'
+
+}
+
+module.exports.getOverOnRequest = (req, res)=>{
+    const {email, startTime, endTime} = req.params
+    let sql = 'SELECT overOnRequest FROM awareness WHERE email = ? AND overOnRequest = 1 AND time >= ? AND time <= ?'
+    db.query(sql, [email, startTime, endTime], (err, response)=>{
+        if(err){
+            console.log(err)
+            res.json({
+                status: false,
+                err: err.code
+            })
+        }
+        else{
+            console.log(response)
+            res.json({
+                status: true,
+                err: null,
+                result: response.length
+            })
+        }
+    })
+
+}
+
+
+module.exports.getCountAttendance = (req, res)=>{
+    const {email, startTime, endTime} = req.params
+    let sql = 'SELECT * FROM awareness WHERE (email = ? AND time >= ? AND time <= ?) AND (ontime = 1 OR latehours = 1)'
+    db.query(sql, [email, startTime, endTime], (err, response)=>{
+        if(err){
+            console.log(err)
+            res.json({
+                status: false,
+                err: err.code
+            })
+        }
+        else{
+            console.log(response)
+            res.json({
+                status: true,
+                err: null,
+                result: response.length
+            })
+        }
+    })
+}
+
+module.exports.getCountLateTime = (req, res)=>{
+    const {email, startTime, endTime} = req.params
+    let sql = 'SELECT * FROM awareness WHERE (email = ? AND time >= ? AND time <= ?) AND  latehours = 1)'
+    db.query(sql, [email, startTime, endTime], (err, response)=>{
+        if(err){
+            console.log(err)
+            res.json({
+                status: false,
+                err: err.code
+            })
+        }
+        else{
+            console.log(response)
+            res.json({
+                status: true,
+                err: null,
+                result: response.length
+            })
+        }
+    })
+}

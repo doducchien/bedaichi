@@ -35,6 +35,19 @@ salary_router.route('/getUnitSalary/:email')
 .get(salary_controller.getUnitSalary)
 
 
+salary_router.route('/getAllTotalSalary/:time')
+.get(salary_controller.getAllTotalSalary)
+
+salary_router.route('/getOverOnRequest/:email/:startTime/:endTime')
+.get(salary_controller.getOverOnRequest)
+
+salary_router.route('/getCountAttendance/:email/:startTime/:endTime')
+.get(salary_controller.getCountAttendance)
+
+salary_router.route('/getCountLateTime/:email/:startTime/:endTime')
+.get(salary_controller.getCountLateTime)
+
+
 salary_router.route('/updateUnitSalary')
 .put(salary_controller.updateUnitSalary)
 
