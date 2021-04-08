@@ -378,3 +378,93 @@ module.exports.addOrdered = (req, res)=>{
         }
     })
 }
+
+module.exports.updateStep = (req, res)=>{
+    const {steps, id} = req.body
+   
+    
+    let params = []
+    console.log(steps)
+    switch(steps){
+        case 0:{
+            params = [1, 0, 0, 0, 0, 0, 0, 0, id]
+            break
+        }
+
+        case 1:{
+            params = [1, 1, 0, 0, 0, 0, 0, 0, id]
+            break
+        }
+
+        case 2:{
+            params = [1, 1, 1, 0, 0, 0, 0, 0, id]
+            break
+            
+        }
+
+        case 3:{
+            params = [1, 1, 1, 1, 0, 0, 0, 0, id]
+            break
+        }
+
+        case 4:{
+            params = [1, 1, 1, 1, 1, 0, 0, 0, id]
+            break
+        }
+
+        case 5:{
+            params = [1, 1, 1, 1, 1, 1, 0, 0, id]
+            break
+        }
+
+        case 6:{
+            params = [1, 1, 1, 1, 1, 1, 1, 0, id]
+            break
+        }
+
+        case 7:{
+            params = [1, 1, 1, 1, 1, 1, 1, 1, id]
+            break
+        }
+
+    }
+
+    let sql = 'UPDATE statusproduct SET init=?, dong=?, suon=?, keogay=?, xen=?, ep=?, dongThung=?, isComplete=? WHERE id like ?'
+    db.query(sql, params, (err, response)=>{
+        if (err) {
+            console.log(err)
+            res.json({
+                status: false,
+                errCode: err.code
+            })
+        }
+        else res.json({
+            status: true,
+            errCode: null,
+        })
+    })
+}
+
+module.exports.getStep = (req, res)=>{
+    const id = req.params.id
+    let sql = 'SELECT * FROM statusproduct WHERE id = ?'
+    db.query(sql, [id], (err, response)=>{
+        if (err) {
+            console.log(err)
+            res.json({
+                status: false,
+                errCode: err.code
+            })
+        }
+        else{
+            const {init, dong, suon, keogay, xen, ep, dongThung, isComplete} = response[0]
+            let step = init + dong + suon + keogay + xen + ep + dongThung + isComplete - 1
+            res.json({
+                status: true,
+                errCode:null,
+                result: step
+            })
+            
+        }
+    })
+}

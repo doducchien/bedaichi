@@ -187,6 +187,31 @@ alter table regime add foreign key(id) references typeRegime(id);
 
 alter table typeRegime add column note text;
 
+ALTER TABLE hrm.statusproduct
+add column init tinyint after id; 
+
+ALTER TABLE hrm.statusproduct
+add column isComplete tinyint after dongthung; 
+
+
+
+
+CREATE trigger after_insert_product
+AFTER INSERT ON hrm.product 
+FOR EACH ROW
+
+	INSERT INTO hrm.statusproduct
+    SET 
+		id = New.id,
+        init = 1,
+        dong = 0,
+        suon = 0,
+        keogay = 0,
+        xen = 0,
+        ep = 0,
+        dongthung = 0,
+        isComplete = 0
+
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '220699';
 flush privileges;

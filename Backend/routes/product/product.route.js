@@ -45,6 +45,9 @@ product_router.route('/getOrdered/:id')
 product_router.route('/getCustomer/:email')
 .get(product_controller.getCustomer)
 
+product_router.route('/getStep/:id')
+.get(product_controller.getStep)
+
 
 
 
@@ -58,7 +61,7 @@ product_router.route('/addOrdered')
 .post(product_controller.addOrdered)
 
 product_router.route('/updateStep')
-.update(product_controller.updateStep)
+.put(product_controller.updateStep)
 
 
 product_router.route('/updateInfoProduct')

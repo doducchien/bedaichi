@@ -482,7 +482,7 @@ export default function DetailProduct(props) {
                 .then(res => {
                     const data = res.data
                     console.log(formOrdered);
-                    if (data.status) {
+                    if (data.status && data.result.length !== 0) {
                         console.log(data.result);
 
                         setFormOrdered({
@@ -531,6 +531,11 @@ export default function DetailProduct(props) {
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
 
+    const [resultStep, setResultStep] = useState({
+        open: false,
+        status: false
+    })
+
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -543,6 +548,60 @@ export default function DetailProduct(props) {
         setActiveStep(0);
     };
 
+    const updateStep = () => {
+        const route = constraints.server + '/product/updateStep'
+        const body = {
+            id: openDetail.item.id,
+            steps: activeStep
+        }
+        axios.put(route, body,{
+            headers:{
+                'user_role': user_role
+            }
+        })
+        .then(res=>{
+            const data = res.data
+            let timeout = setTimeout(()=>{
+                setResultStep({
+                    ...resultStep,
+                    open: false,
+                    status: false
+                })
+                clearTimeout(timeout)
+            }, 2000)
+            if(data.status){
+                setResultStep({
+                    ...resultStep,
+                    open: true,
+                    status: true
+                })
+            }
+            else{
+                setResultStep({
+                    ...resultStep,
+                    open: true,
+                    status: false
+                })
+            }
+        })
+    }
+    useEffect(()=>{
+        if(openDetail.item.id){
+            const route = constraints.server + '/product/getStep/' + openDetail.item.id
+            axios.get(route, {
+                headers:{
+                    'user_role': user_role
+                }
+            })
+            .then(res=>{
+                const data = res.data
+                if(data.status){
+                    setActiveStep(data.result)
+                }
+            })
+        }
+        
+    }, [openDetail])
 
     return (
         <div>
@@ -624,6 +683,7 @@ export default function DetailProduct(props) {
                         <Alert style={resultStaffProduct.open ? {} : { display: 'none' }} severity={resultStaffProduct.status ? 'success' : 'error'}>{resultStaffProduct.status ? 'Thêm nhân viên thành công' : "Thêm nhân viên thất bại"}</Alert>
                         <Alert style={resultDeleteStaffProduct.open ? {} : { display: 'none' }} severity={resultDeleteStaffProduct.status ? 'success' : 'error'}>{resultDeleteStaffProduct.status ? 'Xóa nhân viên thành công' : "Xóa nhân viên thất bại"}</Alert>
                         <Alert style={resultOrdered.open ? {} : { display: 'none' }} severity={resultOrdered.status ? 'success' : 'error'}>{resultOrdered.status ? 'Cập nhật khách hàng thành công' : "Cập nhật khách hàng thất bại"}</Alert>
+                        <Alert style={resultStep.open ? {} : { display: 'none' }} severity={resultStep.status ? 'success' : 'error'}>{resultStep.status ? 'Cập nhật trạng thái thành công' : "Cập nhật trạng thái thất bại"}</Alert>
 
 
                     </div>
@@ -771,7 +831,7 @@ export default function DetailProduct(props) {
                             </Stepper>
                             <div>
                                 {activeStep === steps.length ? (
-                                    <div style={{textAlign: 'center'}}>
+                                    <div style={{ textAlign: 'center' }}>
                                         <Typography className={classes.instructions}>Tất cả các bước đã hoàn thành</Typography>
                                         <Button color="secondary" onClick={handleReset}>Reset</Button>
                                     </div>
@@ -790,9 +850,14 @@ export default function DetailProduct(props) {
                                             <Button variant="outlined" color="secondary" onClick={handleNext}>
                                                 {activeStep === steps.length - 1 ? 'Kết thúc' : 'Tiếp theo'}
                                             </Button>
+
                                         </div>
+
                                     </div>
                                 )}
+                                <div style={{ marginTop: '20px' }}>
+                                    <Button style={{ width: '100%' }} variant="contained" color="secondary" onClick={updateStep}>Lưu</Button>
+                                </div>
                             </div>
                         </div>
                     </div>
