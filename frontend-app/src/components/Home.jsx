@@ -11,6 +11,7 @@ import Admin from './admin/Admin'
 import Staff from './staff/Staff'
 import Regime from './regime/Regime'
 import Product from './product/Product'
+import Salary from './salary/Salary'
 
 
 function Home() {
@@ -37,7 +38,9 @@ function Home() {
                 {
                     position === 'product'? <Product/>: ''
                 }
-                
+                {
+                    position === 'salary'? <Salary />: ''
+                }
             </div>
 
         </div>
