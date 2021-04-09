@@ -44,8 +44,19 @@ salary_router.route('/getOverOnRequest/:email/:startTime/:endTime')
 salary_router.route('/getCountAttendance/:email/:startTime/:endTime')
 .get(salary_controller.getCountAttendance)
 
-salary_router.route('/getCountLateTime/:email/:startTime/:endTime')
+salary_router.route('/getCountLateHours/:email/:startTime/:endTime')
 .get(salary_controller.getCountLateTime)
+
+
+salary_router.route('/getDiscount/:email/:ispaid')
+.get(salary_controller.getDiscount)
+
+salary_router.route('/getAllProduct')
+.get(salary_controller.getAllProduct)
+
+
+salary_router.route('/payWages')
+.post(salary_controller.payWages)
 
 
 salary_router.route('/updateUnitSalary')

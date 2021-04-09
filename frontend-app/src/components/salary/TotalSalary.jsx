@@ -13,6 +13,10 @@ import {
 //textfeild
 import TextField from '@material-ui/core/TextField';
 
+//btn
+import Button from '@material-ui/core/Button';
+
+
 //constraints
 import * as constraints from '../../constraints'
 
@@ -64,17 +68,7 @@ function TotalSalary(props) {
 
 
 
-    const [formInputSalary, setFormInputSalary] = useState({
-        basicSalary: '',
-        overtimeSalary: '',
-        allowance: '',
-        attendanceBonus: '',
-        completedBonus: '',
-        awarenessBonus: '',
-        note: ''
-
-
-    })
+    
 
     const [result1, setResult1] = useState({
         open: false,
@@ -82,11 +76,22 @@ function TotalSalary(props) {
         content: ''
     })
 
+    const [result2, setResult2] = useState({
+        open: false,
+        title: '',
+        content: ''
+    })
+
     const [openPopupDiscount, setOpenPopupDiscount] = useState(false)
 
-    const onChangeInputSalary = () => {
+    const [infoChecked, setInfoChecked] = useState({
+        id: [],
+        totalMoney: 0
+    })
 
-    }
+
+
+    
 
     const openDetail = (email, setted) => {
         console.log(email);
@@ -114,17 +119,70 @@ function TotalSalary(props) {
         })
     }
 
-    const openDiscount = ()=>{
+    const closeResult2 = () => {
+        setResult2({
+            ...result1,
+            open: false,
+            title: '',
+            content: ''
+        })
+    }
+    
+
+    const openDiscount = () => {
         setOpenPopupDiscount(true)
     }
 
+    const payWages = () => {
+        const body = {
+            email: detail.emailDetail,
+            time: selectedDate.getTime(),
+            basicSalary: detail.basicSalary,
+            overtimeSalary: detail.overtimeSalary,
+            performanceBouns: infoChecked.totalMoney,
+            allowance: detail.allowance * countAttendance,
+            attendanceBonus: countAttendance >= 25 ? detail.attendanceBonus * detail.basicSalary / 100 : '0',
+            completedBonus: detail.completedBonus,
+            awarenessBonus: countLateTime < 1 ? detail.awarenessBonus * detail.basicSalary / 100 : 0,
+            totalSalary: infoChecked.totalMoney,
+            listID: infoChecked.id
+        }
+        const route = constraints.server + '/salary/payWages'
+        axios.post(route, body, {
+            headers: {
+                'user_role': user_role
+            }
+        })
+        .then(res=>{
+            const data = res.data
+            if(data.status){
+                setResult2({
+                    ...result2,
+                    open: true,
+                    title: 'Thông báo trả lương',
+                    content: 'Trả lương thành công!'
+                })
+            }
+            else{
+                setResult2({
+                    ...result2,
+                    open: true,
+                    title: 'Thông báo trả lương',
+                    content: 'Trả lương thất bại! Vui lòng thử lại!'
+                })
+            }
+        })
+    }
 
-    //set lai forminput
+
+    useEffect(() => {
+        if (infoChecked.end) setOpenPopupDiscount(false)
+    }, [infoChecked])
 
 
     //lay ho ten tuong ung
     useEffect(() => {
-        
+
         if (detail.emailDetail.trim() !== '') {
             const route = constraints.server + '/salary/getNameStaff/' + detail.emailDetail
             axios.get(route, {
@@ -247,8 +305,10 @@ function TotalSalary(props) {
             .then(res => {
                 const data = res.data
                 if (data.status) {
-
-                    setListTotalStaff(data.result)
+                    const list = data.result.map(item=>{
+                        return item.email
+                    })
+                    setListTotalStaff(list)
                 }
             })
     }, [selectedDate])
@@ -306,16 +366,19 @@ function TotalSalary(props) {
                 <div className="right">
                     <TextField value={detail.emailDetail} name='email' fullWidth label="Email" InputProps={{ readOnly: true }} InputLabelProps={{ shrink: true }} />
                     <TextField value={fullNameDetail} name='fullName' fullWidth label="Họ và tên" InputProps={{ readOnly: true }} InputLabelProps={{ shrink: true }} />
-                    <TextField onChange={onChangeInputSalary} value={detail.basicSalary} name='basicSalary' fullWidth label="Lương cơ bản(VND)" InputProps={{ readOnly: readOnly }} />
-                    <TextField onChange={onChangeInputSalary} value={detail.overtimeSalary * 3 * countOverTime } name='overtimeSalary' fullWidth label="Lương tăng ca (VND)" InputProps={{ readOnly: readOnly }} />
-                    <TextField onChange={onChangeInputSalary} value={detail.allowance * countAttendance} name='allowance' fullWidth label="Phụ cấp sinh hoạt(VND)" InputProps={{ readOnly: readOnly }} />
-                    <TextField onChange={onChangeInputSalary} value={countAttendance >= 25? detail.attendanceBonus * detail.basicSalary/100: '0'} name='attendanceBonus' fullWidth label="Thưởng chuyên cần(VND)" InputProps={{ readOnly: readOnly }} />
-                    <TextField onChange={onChangeInputSalary} value={detail.completedBonus} name='completedBonus' fullWidth label="Thưởng đơn hoàn thành(VNĐ)" InputProps={{ readOnly: readOnly }} />
-                    <TextField onChange={onChangeInputSalary} value={countLateTime <  1 ? detail.awarenessBonus * detail.basicSalary/100: 0} name='awarenessBonus' fullWidth label="Thưởng ý thức (VND)" InputProps={{ readOnly: readOnly }} />
-                    <TextField onChange={onChangeInputSalary} onClick={openDiscount} value={0} name='' fullWidth label="Chiết khấu" InputProps={{ readOnly: readOnly }} />
+                    <TextField value={detail.basicSalary} name='basicSalary' fullWidth label="Lương cơ bản(VND)" InputProps={{ readOnly: readOnly }} />
+                    <TextField value={detail.overtimeSalary * 3 * countOverTime} name='overtimeSalary' fullWidth label="Lương tăng ca (VND)" InputProps={{ readOnly: readOnly }} />
+                    <TextField value={detail.allowance * countAttendance} name='allowance' fullWidth label="Phụ cấp sinh hoạt(VND)" InputProps={{ readOnly: readOnly }} />
+                    <TextField value={countAttendance >= 25 ? detail.attendanceBonus * detail.basicSalary / 100 : '0'} name='attendanceBonus' fullWidth label="Thưởng chuyên cần(VND)" InputProps={{ readOnly: readOnly }} />
+                    <TextField value={detail.completedBonus} name='completedBonus' fullWidth label="Thưởng đơn hoàn thành(VNĐ)" InputProps={{ readOnly: readOnly }} />
+                    <TextField value={countLateTime < 1 ? detail.awarenessBonus * detail.basicSalary / 100 : 0} name='awarenessBonus' fullWidth label="Thưởng ý thức (VND)" InputProps={{ readOnly: readOnly }} />
+                    <TextField onClick={openDiscount} value={infoChecked.totalMoney} name='' fullWidth label="Chiết khấu" InputProps={{ readOnly: readOnly }} />
+                    <div style={{ width: '100%', marginTop: '15px' }}>
+                        <Button onClick={payWages} fullWidth variant="contained" color="primary">Xác nhận trả lương</Button>
+                    </div>
 
-                    <TextField onChange={onChangeInputSalary} value={formInputSalary.note} name='note' fullWidth label="Ghi chú" InputProps={{ readOnly: readOnly }} />
-                    <PopupDiscount openPopupDiscount={openPopupDiscount} setOpenPopupDiscount={setOpenPopupDiscount} />
+                    <PopupDiscount infoChecked={infoChecked} setInfoChecked={setInfoChecked} emailDetail={detail.emailDetail} openPopupDiscount={openPopupDiscount} setOpenPopupDiscount={setOpenPopupDiscount} user_role={user_role} />
+                    <Popup closeResult={closeResult2} result={result2} user_role={user_role}/>
                 </div>
             </div>
         </div>
