@@ -32,7 +32,6 @@ product_router.route('/getAllCustomer')
 product_router.route('/searchCustomer/:keyword')
 .get(product_controller.searchCustomer)
 
-
 product_router.route('/getAllStaffProduct/:id')
 .get(product_controller.getAllStaffProduct)
 
@@ -47,9 +46,6 @@ product_router.route('/getCustomer/:email')
 
 product_router.route('/getStep/:id')
 .get(product_controller.getStep)
-
-
-
 
 product_router.route('/createCustomer')
 .post(product_controller.addCustomer)
