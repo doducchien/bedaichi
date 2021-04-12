@@ -211,6 +211,7 @@ FOR EACH ROW
         ep = 0,
         dongthung = 0,
         isComplete = 0
+;
 
 
 alter table hrm.unitsalary add column setted tinyint;
