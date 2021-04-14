@@ -4,19 +4,20 @@
     .infomation{
         height: 200px;
         width: 100%;
-        text-align: center;
-        img{
-            width: 100px;
-            height: 100px;
-
-            border-radius: 50%;
-            display: block;
-            margin: auto;
-            resize: none;
-        }
+        padding-top: 10px;
         p{
-            margin-top: 10px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: green;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
         }
+        text-align: center;
+      
         u{
             margin-top: 10px;
         }

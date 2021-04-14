@@ -14,15 +14,23 @@ import Product from './product/Product'
 import Salary from './salary/Salary'
 
 
-function Home() {
-    const [position, setPosition] = useState('admin');
+function Home(props) {
+    const {user} = props
+    const [position, setPosition] = useState(user.type);
+
     const changePosition = (pos)=>{
-        setPosition(pos)
+        console.log(position)
+        if(user.type == 'admin') setPosition(pos)
+        else{
+            if(pos !== user.type) alert("Bạn không có quyền truy cập vào chức năng " + pos)
+            
+        }
+        
     }
     return (
         <div className='home'>
 
-            <Menu changePosition={changePosition} position={position} />
+            <Menu user={user} changePosition={changePosition} position={position} />
             <div className="right">
                 {
                    position === 'admin'? <Admin />: ''

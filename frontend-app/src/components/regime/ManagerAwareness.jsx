@@ -23,7 +23,7 @@ function ManagerAwareness(props) {
                 })
 
                 :
-                <DetailAwareness awareness={awareness} user_role={user_role}/>
+                <DetailAwareness setAwareness={setAwareness} awareness={awareness} user_role={user_role}/>
             }
 
 

@@ -30,7 +30,7 @@ import PopupDeleteStaffAwareness from './PopupDeleteStaffAwareness'
 
 
 function DetailAwareness(props) {
-    const { user_role, awareness } = props
+    const { user_role, awareness, setAwareness } = props
 
     const [selectedDate, setSelectedDate] = useState(new Date())
     const [emailAdd, setEmailAdd] = useState('')
@@ -186,7 +186,7 @@ function DetailAwareness(props) {
                     />
                 </MuiPickersUtilsProvider>
 
-                <Button style={{display: 'block', margin: 'auto'}} variant="outlined" color="secondary">Đóng</Button>
+                <Button onClick={()=>setAwareness(null)} style={{display: 'block', margin: 'auto'}} variant="outlined" color="secondary">Đóng</Button>
 
 
                 <TextField

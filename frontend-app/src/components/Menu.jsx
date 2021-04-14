@@ -4,7 +4,7 @@ import * as actions from '../redux/actions/actions'
 
 
 function Menu(props) {
-    const {position, changePosition} = props
+    const {position, changePosition, user} = props
     const dispatch = useDispatch();
     const logout = ()=>{
         dispatch(actions.removeToken())
@@ -15,9 +15,8 @@ function Menu(props) {
     return (
         <div className='menu'>
             <div className="infomation">
-                <img src="https://i.pinimg.com/736x/91/06/21/9106217e59456dbc2593f74737f119c6.jpg" />
-                <p>Đỗ Đức Chiến</p>
-                <u>Quản trị viên</u>
+                <p>{user.fullName}</p>
+                <u>{user.type}</u>
             </div>
 
             <ul className="list">

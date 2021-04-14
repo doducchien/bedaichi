@@ -22,8 +22,9 @@ import * as actions from './redux/actions/actions'
 function App() {
   const token = useSelector(state => state.token)
   const user = useSelector(state => state.user)
+
   console.log(user)
-  console.log(token)
+  
   const [isAuthen, setIsAuthen] = useState(false)
   const dispatch = useDispatch()
   useEffect(() => {
@@ -56,7 +57,7 @@ function App() {
           <Route
             exact
             path='/'
-            render={() => isAuthen ? <Home></Home> : <Redirect to='/login-signup' />}
+            render={() => isAuthen ? <Home user={user}></Home> : <Redirect to='/login-signup' />}
           />
 
           <Route

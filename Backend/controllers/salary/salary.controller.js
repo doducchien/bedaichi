@@ -281,9 +281,10 @@ module.exports.payWages = (req, res)=>{
     } = req.body
     console.log(req.body)
 
-    const prams = [email, `${time}`, basicSalary, overtimeSalary, `${allowance}`, `${performanceBouns}`, attendanceBonus, completedBonus, `${awarenessBonus}`, `${totalSalary}`, '', '']
+    const params = [email, `${time}`, basicSalary, overtimeSalary, `${allowance}`, `${performanceBouns}`, attendanceBonus, completedBonus, `${awarenessBonus}`, `${totalSalary}`, '', '']
+    console.log(params)
     let sql = 'INSERT INTO totalsalary VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-    db.query(sql, prams , (err, response)=>{
+    db.query(sql, params , (err, response)=>{
         if(err){
             console.log(err)
             res.json({
@@ -291,7 +292,7 @@ module.exports.payWages = (req, res)=>{
                 err: err.code
             })
         }
-        else{
+        else if(listID.length > 0){
             let x = listID.map(item=>{
                 return '?'
             })
@@ -315,6 +316,12 @@ module.exports.payWages = (req, res)=>{
                         err: null,
                     })
                 }
+            })
+        }
+        else{
+            res.json({
+                status: true,
+                err: null,
             })
         }
     })

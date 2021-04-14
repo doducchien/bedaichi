@@ -68,7 +68,7 @@ function TotalSalary(props) {
 
 
 
-    
+
 
     const [result1, setResult1] = useState({
         open: false,
@@ -89,9 +89,60 @@ function TotalSalary(props) {
         totalMoney: 0
     })
 
+    const [body, setBody] = useState({
+
+        basicSalary: 0,
+        overtimeSalary: 0,
+        performanceBouns: 0,
+        allowance: 0,
+        attendanceBonus: 0,
+        completedBonus: 0,
+        awarenessBonus: 0,
+        totalSalary: 0,
+    })
+
+    const [sum, setSum] = useState(1000)
+    useEffect(() => {
+
+        const { basicSalary, overtimeSalary, performanceBouns, allowance, attendanceBonus, completedBonus, awarenessBonus, totalSalary } = body
+        console.log(parseFloat(basicSalary), parseFloat(overtimeSalary), parseFloat(performanceBouns), parseFloat(allowance), parseFloat(attendanceBonus), parseFloat(completedBonus), parseFloat(awarenessBonus), parseFloat(totalSalary))
+        let sum = parseFloat(basicSalary) + parseFloat(overtimeSalary) + parseFloat(performanceBouns) + parseFloat(allowance) + parseFloat(attendanceBonus) + parseFloat(completedBonus) + parseFloat(awarenessBonus) + parseFloat(totalSalary)
+        console.log(sum)
+        setSum(sum)
+    }, [body])
+
+    useEffect(() => {
+        let basicSalary = detail.basicSalary
+        let overtimeSalary = detail.overtimeSalary * 3 * countOverTime
+        let performanceBouns = infoChecked.totalMoney
+        let allowance = detail.allowance * countAttendance
+        let attendanceBonus = countAttendance >= 25 ? detail.attendanceBonus * detail.basicSalary / 100 : 0
+        let completedBonus = detail.completedBonus
+        let awarenessBonus = countLateTime < 1 ? detail.awarenessBonus * detail.basicSalary / 100 : 0
+        setBody({
+            ...body,
+
+            basicSalary: basicSalary,
+            overtimeSalary: overtimeSalary ,
+            performanceBouns: performanceBouns,
+            allowance: allowance,
+            attendanceBonus: attendanceBonus,
+            completedBonus: completedBonus,
+            awarenessBonus: awarenessBonus,
+            totalSalary: parseFloat(basicSalary) + parseFloat(overtimeSalary) + parseFloat(performanceBouns) + parseFloat(allowance) + parseFloat(attendanceBonus) + parseFloat(completedBonus) + parseFloat(awarenessBonus)    
+        })
+    }, [infoChecked, detail,])
+
+    useEffect(()=>{
+        setInfoChecked({
+            id: [],
+            totalMoney: 0
+        })
+    },[detail])
 
 
-    
+
+
 
     const openDetail = (email, setted) => {
         console.log(email);
@@ -127,51 +178,58 @@ function TotalSalary(props) {
             content: ''
         })
     }
-    
+
 
     const openDiscount = () => {
         setOpenPopupDiscount(true)
     }
 
     const payWages = () => {
-        const body = {
+        // const body = {
+        //     email: detail.emailDetail,
+        //     time: selectedDate.getTime(),
+        //     basicSalary: detail.basicSalary,
+        //     overtimeSalary: detail.overtimeSalary * 3 * countOverTime,
+        //     performanceBouns: infoChecked.totalMoney,
+        //     allowance: detail.allowance * countAttendance,
+        //     attendanceBonus: countAttendance >= 25 ? detail.attendanceBonus * detail.basicSalary / 100 : 0,
+        //     completedBonus: detail.completedBonus,
+        //     awarenessBonus: countLateTime < 1 ? detail.awarenessBonus * detail.basicSalary / 100 : 0,
+        //     totalSalary: infoChecked.totalMoney,
+        //     listID: infoChecked.id
+        // }
+
+        let body_ = {
+            ...body,
             email: detail.emailDetail,
             time: selectedDate.getTime(),
-            basicSalary: detail.basicSalary,
-            overtimeSalary: detail.overtimeSalary,
-            performanceBouns: infoChecked.totalMoney,
-            allowance: detail.allowance * countAttendance,
-            attendanceBonus: countAttendance >= 25 ? detail.attendanceBonus * detail.basicSalary / 100 : '0',
-            completedBonus: detail.completedBonus,
-            awarenessBonus: countLateTime < 1 ? detail.awarenessBonus * detail.basicSalary / 100 : 0,
-            totalSalary: infoChecked.totalMoney,
             listID: infoChecked.id
         }
         const route = constraints.server + '/salary/payWages'
-        axios.post(route, body, {
+        axios.post(route, body_, {
             headers: {
                 'user_role': user_role
             }
         })
-        .then(res=>{
-            const data = res.data
-            if(data.status){
-                setResult2({
-                    ...result2,
-                    open: true,
-                    title: 'Thông báo trả lương',
-                    content: 'Trả lương thành công!'
-                })
-            }
-            else{
-                setResult2({
-                    ...result2,
-                    open: true,
-                    title: 'Thông báo trả lương',
-                    content: 'Trả lương thất bại! Vui lòng thử lại!'
-                })
-            }
-        })
+            .then(res => {
+                const data = res.data
+                if (data.status) {
+                    setResult2({
+                        ...result2,
+                        open: true,
+                        title: 'Thông báo trả lương',
+                        content: 'Trả lương thành công!'
+                    })
+                }
+                else {
+                    setResult2({
+                        ...result2,
+                        open: true,
+                        title: 'Thông báo trả lương',
+                        content: 'Trả lương thất bại! Vui lòng thử lại!'
+                    })
+                }
+            })
     }
 
 
@@ -305,7 +363,7 @@ function TotalSalary(props) {
             .then(res => {
                 const data = res.data
                 if (data.status) {
-                    const list = data.result.map(item=>{
+                    const list = data.result.map(item => {
                         return item.email
                     })
                     setListTotalStaff(list)
@@ -372,13 +430,15 @@ function TotalSalary(props) {
                     <TextField value={countAttendance >= 25 ? detail.attendanceBonus * detail.basicSalary / 100 : '0'} name='attendanceBonus' fullWidth label="Thưởng chuyên cần(VND)" InputProps={{ readOnly: readOnly }} />
                     <TextField value={detail.completedBonus} name='completedBonus' fullWidth label="Thưởng đơn hoàn thành(VNĐ)" InputProps={{ readOnly: readOnly }} />
                     <TextField value={countLateTime < 1 ? detail.awarenessBonus * detail.basicSalary / 100 : 0} name='awarenessBonus' fullWidth label="Thưởng ý thức (VND)" InputProps={{ readOnly: readOnly }} />
-                    <TextField onClick={openDiscount} value={infoChecked.totalMoney} name='' fullWidth label="Chiết khấu" InputProps={{ readOnly: readOnly }} />
+                    <TextField onClick={openDiscount} value={infoChecked.totalMoney} fullWidth label="Chiết khấu" InputProps={{ readOnly: readOnly }} />
+                    <p>Tổng = {body.totalSalary}</p>
+
                     <div style={{ width: '100%', marginTop: '15px' }}>
                         <Button onClick={payWages} fullWidth variant="contained" color="primary">Xác nhận trả lương</Button>
                     </div>
 
                     <PopupDiscount infoChecked={infoChecked} setInfoChecked={setInfoChecked} emailDetail={detail.emailDetail} openPopupDiscount={openPopupDiscount} setOpenPopupDiscount={setOpenPopupDiscount} user_role={user_role} />
-                    <Popup closeResult={closeResult2} result={result2} user_role={user_role}/>
+                    <Popup closeResult={closeResult2} result={result2} user_role={user_role} />
                 </div>
             </div>
         </div>
