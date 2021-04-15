@@ -79,7 +79,7 @@ function LoginSignup(props) {
                 }
             })
             .catch(err=>{
-                
+                console.log(err)
             })
         }
     }
@@ -103,6 +103,7 @@ function LoginSignup(props) {
             }
             else{
                 let token = res.token;
+                
                 dispatch(actions.setUser(res.user))
                 dispatch(actions.setToken(token))
             }

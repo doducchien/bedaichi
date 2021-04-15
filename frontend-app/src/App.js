@@ -27,6 +27,7 @@ function App() {
   
   const [isAuthen, setIsAuthen] = useState(false)
   const dispatch = useDispatch()
+
   useEffect(() => {
     if (token) {
       const route = constraints.server + '/authentication/loginByToken'
@@ -40,7 +41,7 @@ function App() {
           }
         })
         .catch(err => {
-
+         
         })
     }
     else{

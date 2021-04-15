@@ -9,7 +9,7 @@ module.exports.signup = (req, res)=>{
 
     body.password = md5(body.email + "-" + body.password)
     
-    let sql = 'INSERT INTO User SET ?'
+    let sql = 'INSERT INTO user SET ?'
     db.query(sql, [body], (err, response)=>{
         if(err){
             console.log(err)
@@ -34,8 +34,9 @@ module.exports.signup = (req, res)=>{
 module.exports.login = (req, res)=>{
     let body = req.body;
     body.password = md5(body.email + "-" + body.password)
-    let sql = "SELECT * FROM User WHERE email = ? AND password = ?"
+    let sql = "SELECT * FROM user WHERE email = ? AND password = ?"
     db.query(sql, [body.email, body.password], (err, response)=>{
+  
         if(response.length  === 1){
             res.json({
                 status: true,
@@ -56,7 +57,7 @@ module.exports.login = (req, res)=>{
 module.exports.loginByToken = (req, res)=>{
     let token = req.body.token;
     let data = token.split('*');
-    let sql = 'SELECT * FROM User WHERE email = ? AND password = ?'
+    let sql = 'SELECT * FROM user WHERE email = ? AND password = ?'
     db.query(sql, [data[0], data[1]], (err, response)=>{
         if(err){
             res.json({
