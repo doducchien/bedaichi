@@ -1,3 +1,4 @@
+
 create database hrm;
 use hrm;
 create table user(
@@ -136,7 +137,7 @@ create table typeRegime(
 alter table user add primary key(email);
 alter table staff add primary key(email);
 alter table unitSalary add primary key(email);
-alter table timekeeping add primary key(email, time);
+alter table timeKeeping add primary key(email, time);
 alter table totalSalary add primary key(email, time);
 
 alter table product add primary key(id);
@@ -187,10 +188,10 @@ alter table regime add foreign key(id) references typeRegime(id);
 
 alter table typeRegime add column note text;
 
-ALTER TABLE hrm.statusproduct
+ALTER TABLE hrm.statusProduct
 add column init tinyint after id; 
 
-ALTER TABLE hrm.statusproduct
+ALTER TABLE hrm.statusProduct
 add column isComplete tinyint after dongthung; 
 
 
@@ -200,7 +201,7 @@ CREATE trigger after_insert_product
 AFTER INSERT ON hrm.product 
 FOR EACH ROW
 
-	INSERT INTO hrm.statusproduct
+	INSERT INTO hrm.statusProduct
     SET 
 		id = New.id,
         init = 1,
@@ -214,26 +215,22 @@ FOR EACH ROW
 ;
 
 
-alter table hrm.unitsalary add column setted tinyint;
+alter table hrm.unitSalary add column setted tinyint;
 
 use hrm;
 CREATE trigger after_insert_staff
 AFTER INSERT ON hrm.staff 
 FOR EACH ROW
 
-	INSERT INTO hrm.unitsalary
+	INSERT INTO hrm.unitSalary
     SET email = New.email, setted = 0;
 
 
-alter table hrm.staffproduct add column ispaid tinyint;
+alter table hrm.staffProduct add column ispaid tinyint;
 
 
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '220699';
 flush privileges;
-
-
-
-
 
 
