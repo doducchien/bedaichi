@@ -201,10 +201,11 @@ module.exports.createStaffProduct = (req, res) => {
                 })
             }
             else {
-                let sql = 'SELECT * FROM staffproduct WHERE email=? AND id=?'
+                let sql = 'SELECT * FROM staffProduct WHERE email=? AND id=?'
                 db.query(sql, [emailStaff, id], (err, response) => {
+                    console.log(typeof(response))
                     if (response.length === 0) {
-                        sql = 'INSERT INTO staffproduct VALUES(?, ?, ?, ?)'
+                        sql = 'INSERT INTO staffProduct VALUES(?, ?, ?, ?)'
                         db.query(sql, [id, emailStaff, discount, 0], (err, response) => {
                             if (err) {
                                 console.log(err)
@@ -245,7 +246,7 @@ module.exports.createStaffProduct = (req, res) => {
 module.exports.getAllStaffProduct = (req, res)=>{
     const id = req.params['id']
     console.log(id)
-    let sql = 'SELECT * FROM staffproduct WHERE id = ?'
+    let sql = 'SELECT * FROM staffProduct WHERE id = ?'
     db.query(sql, [id],  (err, response)=>{
         if (err) {
             console.log(err)
@@ -264,7 +265,7 @@ module.exports.getAllStaffProduct = (req, res)=>{
 
 module.exports.deleteStaffProduct = (req, res)=>{
     const {id, email} = req.params
-    let sql = 'DELETE FROM staffproduct WHERE id=? AND email=?'
+    let sql = 'DELETE FROM staffProduct WHERE id=? AND email=?'
     db.query(sql, [id, email], (err, response)=>{
         if (err) {
             console.log(err)
@@ -429,7 +430,7 @@ module.exports.updateStep = (req, res)=>{
 
     }
 
-    let sql = 'UPDATE statusproduct SET init=?, dong=?, suon=?, keogay=?, xen=?, ep=?, dongThung=?, isComplete=? WHERE id like ?'
+    let sql = 'UPDATE statusProduct SET init=?, dong=?, suon=?, keogay=?, xen=?, ep=?, dongThung=?, isComplete=? WHERE id like ?'
     db.query(sql, params, (err, response)=>{
         if (err) {
             console.log(err)
@@ -447,7 +448,7 @@ module.exports.updateStep = (req, res)=>{
 
 module.exports.getStep = (req, res)=>{
     const id = req.params.id
-    let sql = 'SELECT * FROM statusproduct WHERE id = ?'
+    let sql = 'SELECT * FROM statusProduct WHERE id = ?'
     db.query(sql, [id], (err, response)=>{
         if (err) {
             console.log(err)

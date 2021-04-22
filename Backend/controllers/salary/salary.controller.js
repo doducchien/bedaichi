@@ -109,7 +109,7 @@ module.exports.updateUnitSalary = (req, res) => {
 
 module.exports.getUnitSalary = (req, res) => {
     const email = req.params.email
-    let sql = 'SELECT * FROM unitsalary WHERE email = ?'
+    let sql = 'SELECT * FROM unitSalary WHERE email = ?'
     db.query(sql, [email], (err, response) => {
         if (err) {
             console.log(err)
@@ -132,7 +132,7 @@ module.exports.getUnitSalary = (req, res) => {
 module.exports.getAllTotalSalary = (req, res) => {
     const time = req.params.time
     console.log(time)
-    let sql = 'SELECT * FROM totalsalary WHERE time=?'
+    let sql = 'SELECT * FROM totalSalary WHERE time=?'
     db.query(sql, [time], (err, response)=>{
         if (err) {
             console.log(err)
@@ -224,7 +224,7 @@ module.exports.getDiscount = (req, res) => {
     const email = req.params.email
     const ispaid = req.params.ispaid
     console.log(req.params)
-    let sql = 'SELECT * FROM staffproduct WHERE email =? and ispaid = ?'
+    let sql = 'SELECT * FROM staffProduct WHERE email =? and ispaid = ?'
     db.query(sql, [email, ispaid], (err, response) => {
         if (err) {
             console.log(err)
@@ -283,7 +283,7 @@ module.exports.payWages = (req, res)=>{
 
     const params = [email, `${time}`, basicSalary, overtimeSalary, `${allowance}`, `${performanceBouns}`, attendanceBonus, completedBonus, `${awarenessBonus}`, `${totalSalary}`, '', '']
     console.log(params)
-    let sql = 'INSERT INTO totalsalary VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    let sql = 'INSERT INTO totalSalary VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     db.query(sql, params , (err, response)=>{
         if(err){
             console.log(err)
@@ -298,11 +298,11 @@ module.exports.payWages = (req, res)=>{
             })
             x.join(',')
             const params = listID.concat(email)
-            sql = `UPDATE staffproduct SET ispaid = 1 WHERE id IN(${x}) AND email=?`
+            sql = `UPDATE staffProduct SET ispaid = 1 WHERE id IN(${x}) AND email=?`
             db.query(sql, params, (err, response)=>{
                 if(err){
                     console.log(err)
-                    sql = 'DELETE FROM totalsalary WHERE email=? AND time=?'
+                    sql = 'DELETE FROM totalSalary WHERE email=? AND time=?'
                     db.query(sql, [email, time])
                     res.json({
                         status: false,
