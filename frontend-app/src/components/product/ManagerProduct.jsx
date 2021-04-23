@@ -116,17 +116,17 @@ function ManagerProduct(props) {
                 <AntTabs value={value} onChange={handleChange} aria-label="ant example">
                     <AntTab label="Thêm sản phẩm" />
                     <AntTab label="Thông tin sản phẩm" />
-                    <AntTab label="Thống kê" />
+                    {/* <AntTab label="Thống kê" /> */}
                 </AntTabs>
                 {/* <Typography className={classes.padding} /> */}
             </AppBar>
             <TabPanel value={value} index={0}><AddProduct user_role={user_role}/></TabPanel>
             <TabPanel value={value} index={1}><ListProduct  user_role={user_role}/></TabPanel>
-            <TabPanel value={value} index={2}>Item Three</TabPanel>
+            {/* <TabPanel value={value} index={2}>Item Three</TabPanel>
             <TabPanel value={value} index={3}>Item Four</TabPanel>
             <TabPanel value={value} index={4}>Item Five</TabPanel>
             <TabPanel value={value} index={5}>Item Six</TabPanel>
-            <TabPanel value={value} index={6}>Item Seven</TabPanel>
+            <TabPanel value={value} index={6}>Item Seven</TabPanel> */}
         </div>
     )
 }
