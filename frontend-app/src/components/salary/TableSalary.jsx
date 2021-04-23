@@ -25,27 +25,37 @@ import * as constraints from '../../constraints'
 import axios from 'axios'
 
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-  
-  const rows = [
+//export excel
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+
+//btn
+import Button from '@material-ui/core/Button';
+
+
+function createData(name, basicSalary, overtimeSalary, allowance, performanceBonus, attendanceBonus, completedBonus, awarenessBonus, totalSalary) {
+    return { name, basicSalary, overtimeSalary, allowance, performanceBonus, attendanceBonus, completedBonus, awarenessBonus, totalSalary };
+}
+
+const rows = [
     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
     createData('Eclair', 262, 16.0, 24, 6.0),
     createData('Cupcake', 305, 3.7, 67, 4.3),
     createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
+];
 
 
 function TableSalary(props) {
-    const {user_role} = props
-    const [timeSelect, setTimeSelect] = useState(()=>{
+    const { user_role } = props
+    const [timeSelect, setTimeSelect] = useState(() => {
         let date = new Date()
         date.setDate(1)
         date.setHours(0, 0, 0, 0)
         return date
     })
+
+    const [dataExcel, setDataExcel] = useState([])
 
     const onChangeTime = (time) => {
         time.setDate(1)
@@ -53,20 +63,34 @@ function TableSalary(props) {
         setTimeSelect(time)
     }
 
+    const exportToCSV = (csvData, fileName) => {
+
+        const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+        const fileExtension = '.xlsx';
+        const ws = XLSX.utils.json_to_sheet(csvData);
+        const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+        const data = new Blob([excelBuffer], { type: fileType });
+        FileSaver.saveAs(data, fileName + fileExtension);
+    }
 
 
-    useEffect(()=>{
+
+    useEffect(() => {
         const route = constraints.server + '/salary/getAllTotalSalary/' + timeSelect.getTime()
         axios.get(route, {
-            headers:{
+            headers: {
                 'user_role': user_role
-            
+
             }
         })
-        .then(res=>{
-            console.log(res.data)
-        })
+            .then(res => {
+                setDataExcel(res.data.result)
+            })
     }, [timeSelect])
+
+
+    console.log(dataExcel)
     return (
         <div className="table-salary_">
             <div className="header">
@@ -110,26 +134,32 @@ function TableSalary(props) {
 
                                 <TableCell align="right">totalSalary</TableCell>
 
-                               
+
 
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.name}>
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
+                            {dataExcel.map(item => (
+                                <TableRow key={item.email}>
+                                    <TableCell component="th" scope="item">
+                                        {item.email}
                                     </TableCell>
-                                    <TableCell align="right">{row.calories}</TableCell>
-                                    <TableCell align="right">{row.fat}</TableCell>
-                                    <TableCell align="right">{row.carbs}</TableCell>
-                                    <TableCell align="right">{row.protein}</TableCell>
+                                    <TableCell align="right">{item.basicSalary}</TableCell>
+                                    <TableCell align="right">{item.overtimeSalary}</TableCell>
+                                    <TableCell align="right">{item.allowance}</TableCell>
+                                    <TableCell align="right">{item.performanceBonus}</TableCell>
+                                    <TableCell align="right">{item.attendanceBonus}</TableCell>
+                                    <TableCell align="right">{item.completedBonus}</TableCell>
+                                    <TableCell align="right">{item.awarenessBonus}</TableCell>
+                                    <TableCell align="right">{item.totalSalary}</TableCell>
+
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
             </div>
+            <div style={{ height: '50px', width: '100%', textAlign: 'center' }}><Button onClick={() => exportToCSV(dataExcel, 'listSalary')}  variant="outlined" color="secondary">Xuất danh sách lương</Button></div>
         </div>
     )
 }
