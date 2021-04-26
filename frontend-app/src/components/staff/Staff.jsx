@@ -18,9 +18,9 @@ function Staff() {
         <div className="staff">
             <div className="header">
                 <div onClick={()=>changeMode('department')} className="manager-department menu_">Quản lý phòng ban</div>
-                <div onClick={()=>changeMode('add')} className="add-staff_ menu_">Thêm mới nhân viên</div>
-                <div onClick={()=>changeMode('information')} className="manager-infomation-staff menu_">Quản lý thông tin nhân viên</div>
-                <div onClick={()=>changeMode('timework')} className="manager-real-work menu_">Quản lý thời gian làm việc</div>
+                <div onClick={()=>changeMode('add')} className="add-staff_ menu_">Thêm nhân viên</div>
+                <div onClick={()=>changeMode('information')} className="manager-infomation-staff menu_">Quản lý thông tin</div>
+                <div onClick={()=>changeMode('timework')} className="manager-real-work menu_">Quản lý thời gian</div>
             </div>
             <div className="body_">
                 {mode === 'add' ? <AddStaff user_role={user_role}/>: ''}

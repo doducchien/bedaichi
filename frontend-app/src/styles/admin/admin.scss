@@ -4,7 +4,7 @@
     // padding: 10px;
     .header{
         width: 100%;
-        height: 50px;
+        height: 30px;
         display: flex;
         justify-content: space-around;
      
@@ -12,7 +12,7 @@
 
         .menu-admin{
             width: 200px;
-            height: 50px;
+            height: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -46,9 +46,9 @@
     }
     .body_{
         width: 100%;
-        height: calc(100% - 50px);
+        height: calc(100% - 30px);
         
-        padding: 20px;
+        padding: 10px;
 
         
     }

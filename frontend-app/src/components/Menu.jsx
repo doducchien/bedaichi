@@ -28,7 +28,7 @@ function Menu(props) {
             </ul>
 
             <div className="footer">
-                <span className="material-icons">account_circle</span>
+                {/* <span className="material-icons">account_circle</span> */}
                 <span onClick={logout} className="material-icons">logout</span>
             </div>
         
