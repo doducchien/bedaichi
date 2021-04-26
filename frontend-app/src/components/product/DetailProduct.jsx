@@ -14,10 +14,6 @@ import Button from '@material-ui/core/Button';
 
 
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 
 //textfeild
@@ -25,9 +21,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+
 
 //radio
 import Radio from '@material-ui/core/Radio';
@@ -44,7 +38,6 @@ import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 
@@ -61,7 +54,6 @@ import Typography from '@material-ui/core/Typography';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import BrandingWatermarkIcon from '@material-ui/icons/BrandingWatermark';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import BeenhereIcon from '@material-ui/icons/Beenhere';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
@@ -76,8 +68,7 @@ import * as constraints from '../../constraints'
 //axios
 import axios from 'axios'
 
-//component
-import Popup from './Popup'
+
 
 
 

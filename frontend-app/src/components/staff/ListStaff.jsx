@@ -23,15 +23,22 @@ import * as constraints from '../../constraints'
 //export excel
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+import { CSVLink } from 'react-csv'
+
+
+import ReactExport from 'react-data-export';
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+
 
 
 
 
 function createData(image, email, fullName, phoneNumber, sex, joinDay, leftDay, position) {
-    if (sex === 0) sex = 'name'
+    if (sex === 0) sex = 'nam'
     else if (sex === 1) sex = 'nữ'
     else sex = 'khác'
-    console.log(joinDay)
     joinDay = constraints.changeIntToTime(parseInt(joinDay))
 
     if (leftDay !== null) leftDay = constraints.changeIntToTime(parseInt(leftDay))
@@ -44,6 +51,7 @@ function createData(image, email, fullName, phoneNumber, sex, joinDay, leftDay, 
 
 
 const TableStaff = ({ listStaff, openDetailStaff }) => {
+
 
     return (
         <TableContainer style={{ width: '100%' }} component={Paper}>
@@ -94,7 +102,50 @@ const TableStaff = ({ listStaff, openDetailStaff }) => {
 }
 
 function ListStaff(props) {
+
+
+
     const { user_role, listStaff, openDetailStaff } = props
+    const DataSet = [
+        {
+            columns: [
+                { title: "Ảnh", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } }, // width in pixels
+                { title: "Eamil", style: { font: { sz: "18", bold: true } }, width: { wch: 30 } }, // width in characters
+                { title: "Họ và tên", style: { font: { sz: "18", bold: true } }, width: { wpx: 100 } }, // width in pixels
+                { title: "Số điện thoại", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } }, // width in pixels
+                { title: "Giới tính", style: { font: { sz: "18", bold: true } }, width: { wpx: 100 } }, // width in pixels
+                { title: "Ngày tham gia ", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } }, // width in pixels
+                { title: "Ngày nghỉ việc", style: { font: { sz: "18", bold: true } }, width: { wch: 30 } }, // width in characters
+                { title: "Vị trí", style: { font: { sz: "18", bold: true } }, width: { wpx: 125 } }, // width in pixels
+
+
+            ],
+            // data: listStaff.map((data) => [
+            //     { value: data.image, style: { font: { sz: "14" } } },
+            //     { value: data.email, style: { font: { sz: "14" } } },
+            //     { value: data.fullName, style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "3461eb" } } } },
+            //     { value: data.phoneNumber, style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "eb1207" } } } },
+            //     { value: data.sex, style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "4bd909" } } } },
+            //     { value: data.joinDay, style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "ebc907" } } } },
+            //     { value: data.leftDay, style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "35bdb4" } } } },
+            //     { value: data.position, style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "ed14f5" } } } },
+
+            // ])
+            data: listStaff.map((data) => [
+                { value: 'image', style: { font: { sz: "14" } } },
+                { value: 'email', style: { font: { sz: "14" } } },
+                { value: 'fullName', style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "3461eb" } } } },
+                { value: 'phoneNumber', style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "eb1207" } } } },
+                { value: 'sex', style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "4bd909" } } } },
+                { value: 'joinDay', style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "ebc907" } } } },
+                { value: 'leftDay', style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "35bdb4" } } } },
+                { value: 'position', style: { font: { color: { rgb: "ffffff" } }, fill: { patternType: "solid", fgColor: { rgb: "ed14f5" } } } },
+
+            ])
+        }
+    ]
+    console.log(DataSet)
+
     const dataExcel = listStaff.map(item => {
         const { image, email, fullName, phoneNumber, sex, joinDay, leftDay, position } = item
         return createData(image, email, fullName, phoneNumber, sex, joinDay, leftDay, position)
@@ -102,11 +153,15 @@ function ListStaff(props) {
     })
 
 
+
     const exportToCSV = (csvData, fileName) => {
+
 
         const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
         const fileExtension = '.xlsx';
-        const ws = XLSX.utils.json_to_sheet(csvData);
+        const ws = XLSX.utils.json_to_sheet(csvData, {
+            header: ['hihi'],
+        });
         const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
         const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
         const data = new Blob([excelBuffer], { type: fileType });
@@ -121,7 +176,17 @@ function ListStaff(props) {
 
 
             <div className='right'>
-                <Button onClick={() => exportToCSV(dataExcel, 'listStaff')} style={{ height: '70px' }} variant="outlined" color="secondary">Xuất danh sách nhân viên</Button>
+                {/* <Button onClick={() => exportToCSV(dataExcel, 'listStaff')} style={{ height: '70px' }} variant="outlined" color="secondary">Xuất danh sách nhân viên</Button> */}
+                {
+                    listStaff.length > 0 ?
+                        <ExcelFile
+                            filename="Covid-19 Data"
+                            element={<button type="button" >Export Data</button>}>
+                            <ExcelSheet dataSet={DataSet} name="Covid-19 Country Report" />
+                        </ExcelFile>
+                    :
+                    ''
+                }
 
             </div>
 

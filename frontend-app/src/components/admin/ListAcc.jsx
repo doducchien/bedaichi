@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 
 //icon
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import SortIcon from '@material-ui/icons/Sort';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 //axios

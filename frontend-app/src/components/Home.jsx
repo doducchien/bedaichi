@@ -1,6 +1,6 @@
 
 
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 
 //material-icons
 import 'material-icons/iconfont/material-icons.scss';
@@ -20,7 +20,7 @@ function Home(props) {
 
     const changePosition = (pos)=>{
         console.log(position)
-        if(user.type == 'admin') setPosition(pos)
+        if(user.type === 'admin') setPosition(pos)
         else{
             if(pos !== user.type) alert("Bạn không có quyền truy cập vào chức năng " + pos)
             
@@ -37,7 +37,7 @@ function Home(props) {
                 }
 
                 {
-                    position == 'staff'? <Staff />: ''
+                    position === 'staff'? <Staff />: ''
                 }
 
                 {

@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-//button
-import { Button } from '@material-ui/core';
 
 //component
 import MenuDropdown from './MenuDropdown'
@@ -46,7 +44,6 @@ function ManageAcc(props) {
 
     const changeRole = (value)=>{
         console.log(user_role)
-        const {email, role} = value
         const route = constraints.server + '/onlyAdmin/updateAcc'
         axios.put(route, value,
             {
