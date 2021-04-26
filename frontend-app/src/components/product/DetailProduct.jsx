@@ -688,7 +688,7 @@ export default function DetailProduct(props) {
 
                     </div>
                     <div style={rightStyle}>
-                        <div style={{ width: '100%', height: '50%', display: 'flex', justifyContent: 'space-between' }}>
+                        <div style={{ width: '100%', height: '55%', display: 'flex', justifyContent: 'space-between' }}>
                             <div style={{ width: '50%', height: '100%', border: '1px solid gray', padding: '3px' }}>
                                 <div style={{ width: '100%', height: '40px', display: 'flex', justifyContent: 'space-between', borderBottom: '3px solid gray' }}>
                                     <input onChange={changeStaffProduct} name='emailStaff' style={{ height: '30px', paddingLeft: '5px' }} type="text" placeholder='Email' />
@@ -821,7 +821,7 @@ export default function DetailProduct(props) {
                         </div>
 
                         {/* quy trinh san xuat */}
-                        <div style={{ width: '100%', height: '50%', border: '1px solid gray', padding: '3px' }}>
+                        <div style={{ width: '100%', height: '45%', border: '1px solid gray', padding: '3px' }}>
                             <Stepper activeStep={activeStep} alternativeLabel>
                                 {steps.map((label) => (
                                     <Step key={label}>

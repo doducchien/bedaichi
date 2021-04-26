@@ -110,9 +110,9 @@ function DetailStaff(props) {
             <div className="under">
                 <p>Ghi chú: {infomationStaff.note}</p>
                 <div className="btns_">
-                    <Button onClick={() => closeDetailStaff()} style={{ width: '200px', height: '50px' }} variant="contained" >Đóng</Button>
-                    <Button onClick={changeStaff} style={{ width: '200px', height: '50px' }} variant="contained" color="secondary">Chỉnh sửa</Button>
-                    <Button style={{ width: '200px', height: '50px' }} variant="contained" color="primary">Xuất file</Button>
+                    <Button onClick={() => closeDetailStaff()} style={{ width: '150px', height: '30px' }} variant="contained" >Đóng</Button>
+                    <Button onClick={changeStaff} style={{ width: '150px', height: '30px' }} variant="contained" color="secondary">Chỉnh sửa</Button>
+                    <Button style={{ width: '150px', height: '30px' }} variant="contained" color="primary">Xuất file</Button>
 
                 </div>
             </div>
