@@ -141,6 +141,7 @@ function LoginSignup(props) {
     return (
         <div className='login-signup'>
             <header>CÔNG TY TNHH DỊCH VỤ CÔNG NGHỆ THIÊN HẰNG</header>
+            <img src="https://inthienhang.com/wp-content/uploads/2020/05/google-logo-1-1400x788.png.webp" alt="Thiên Hằng"/>
             <BottomNavigation
                 value={mode}
                 showLabels

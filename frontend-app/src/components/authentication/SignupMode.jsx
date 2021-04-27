@@ -83,7 +83,6 @@ function SignupMode({dataSignupProps}){
                     onChange={onChangeInput}
                     style={{ width: '250px' }}
                     type='date'
-                    id="input-with-icon-textfield"
                     label="Ngày sinh"
                     InputProps={{
                         startAdornment: (
@@ -97,7 +96,6 @@ function SignupMode({dataSignupProps}){
                     name='sex'
                     onChange={onChangeInput}
                     style={{ width: '250px' }}
-                    id="standard-select-currency"
                     select
                     defaultValue={dataSignup.sex}
                     label="Giới tính"
