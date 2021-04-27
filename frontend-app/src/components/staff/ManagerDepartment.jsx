@@ -13,6 +13,8 @@ import AddDepartment from './AddDepartment'
 //button material ui
 import Button from '@material-ui/core/Button';
 
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+
 
 
 function ManagerDepartment(props) {
@@ -54,6 +56,7 @@ function ManagerDepartment(props) {
                 {listDepartment.map(item => {
                     return (
                         <div onClick={() => showDetailDepartment(item)} key={index++} className="department">
+                            <MeetingRoomIcon/>
                             <h3>{item.name}</h3>
                         </div>
                     )

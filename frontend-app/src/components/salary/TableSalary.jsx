@@ -26,8 +26,7 @@ import axios from 'axios'
 
 
 //export excel
-import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 //btn
 import Button from '@material-ui/core/Button';
@@ -63,16 +62,7 @@ function TableSalary(props) {
         setTimeSelect(time)
     }
 
-    const exportToCSV = (csvData, fileName) => {
-
-        const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-        const fileExtension = '.xlsx';
-        const ws = XLSX.utils.json_to_sheet(csvData);
-        const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
-        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-        const data = new Blob([excelBuffer], { type: fileType });
-        FileSaver.saveAs(data, fileName + fileExtension);
-    }
+    
 
 
 
@@ -115,24 +105,23 @@ function TableSalary(props) {
                 </MuiPickersUtilsProvider>
             </div>
 
-            <div className="body_">
+            <div className="body_" style={{ marginTop: '10px' }}>
                 <TableContainer component={Paper}>
-                    <Table aria-label="simple table">
+                    <Table id='export-total-salary'>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Email</TableCell>
-                                <TableCell align="right">basicSalary</TableCell>
-                                <TableCell align="right">overtimeSalary</TableCell>
-                                <TableCell align="right">allowance</TableCell>
-                                <TableCell align="right">performanceBonus</TableCell>
+                                <TableCell align="center">Họ tên</TableCell>
+                                <TableCell align="center">Email</TableCell>
+                                <TableCell align="center">Cơ bản</TableCell>
+                                <TableCell align="center">Làm thêm giờ</TableCell>
+                                <TableCell align="center">Trợ cấp</TableCell>
+                                <TableCell align="center">Chiết khấu</TableCell>
 
-                                <TableCell align="right">attendanceBonus</TableCell>
+                                <TableCell align="center">Chuyên cần</TableCell>
 
-                                <TableCell align="right">completedBonus</TableCell>
+                                <TableCell align="center">Đúng giờ</TableCell>
 
-                                <TableCell align="right">awarenessBonus</TableCell>
-
-                                <TableCell align="right">totalSalary</TableCell>
+                                <TableCell align="center">Tổng</TableCell>
 
 
 
@@ -141,17 +130,16 @@ function TableSalary(props) {
                         <TableBody>
                             {dataExcel.map(item => (
                                 <TableRow key={item.email}>
-                                    <TableCell component="th" scope="item">
-                                        {item.email}
-                                    </TableCell>
-                                    <TableCell align="right">{item.basicSalary}</TableCell>
-                                    <TableCell align="right">{item.overtimeSalary}</TableCell>
-                                    <TableCell align="right">{item.allowance}</TableCell>
-                                    <TableCell align="right">{item.performanceBonus}</TableCell>
-                                    <TableCell align="right">{item.attendanceBonus}</TableCell>
-                                    <TableCell align="right">{item.completedBonus}</TableCell>
-                                    <TableCell align="right">{item.awarenessBonus}</TableCell>
-                                    <TableCell align="right">{item.totalSalary}</TableCell>
+                                    <TableCell align="center">{item.fullName}</TableCell>
+
+                                    <TableCell align="center">{item.email}</TableCell>
+                                    <TableCell align="center">{item.basicSalary}</TableCell>
+                                    <TableCell align="center">{item.overtimeSalary}</TableCell>
+                                    <TableCell align="center">{item.allowance}</TableCell>
+                                    <TableCell align="center">{item.performanceBonus}</TableCell>
+                                    <TableCell align="center">{item.attendanceBonus}</TableCell>
+                                    <TableCell align="center">{item.awarenessBonus}</TableCell>
+                                    <TableCell align="center">{item.totalSalary}</TableCell>
 
                                 </TableRow>
                             ))}
@@ -159,7 +147,16 @@ function TableSalary(props) {
                     </Table>
                 </TableContainer>
             </div>
-            <div style={{ height: '50px', width: '100%', textAlign: 'center' }}><Button onClick={() => exportToCSV(dataExcel, 'listSalary')}  variant="outlined" color="secondary">Xuất danh sách lương</Button></div>
+            <div style={{ height: '50px', width: '100%', textAlign: 'center' }}>
+                <ReactHTMLTableToExcel
+                    table="export-total-salary"
+                    filename={"Báo cáo danh sách hệ số lương"}
+                    sheet="tablexls"
+                    buttonText='Xuất báo cáo'
+                    className='export'
+
+                />
+            </div>
         </div>
     )
 }

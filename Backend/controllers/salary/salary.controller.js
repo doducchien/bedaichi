@@ -47,7 +47,7 @@ module.exports.searchUnitSalary = (req, res) => {
 
 module.exports.getAllStaffUnit = (req, res) => {
 
-    let sql = 'SELECT * FROM unitSalary'
+    let sql = 'SELECT  u.email, u.basicSalary, u.overtimeSalary, u.allowance, u.performanceBonus, u.attendanceBonus, u.completedBonus, u.awarenessBonus, u.setted, staff.fullName FROM unitSalary as u, staff WHERE u.email = staff.email'
     db.query(sql, (err, response) => {
         if (err) {
             console.log(err)
@@ -132,7 +132,7 @@ module.exports.getUnitSalary = (req, res) => {
 module.exports.getAllTotalSalary = (req, res) => {
     const time = req.params.time
     console.log(time)
-    let sql = 'SELECT * FROM totalSalary WHERE time=?'
+    let sql = 'SELECT u.email, u.basicSalary, u.overtimeSalary, u.allowance, u.performanceBonus, u.attendanceBonus, u.awarenessBonus, u.totalSalary, staff.fullName  FROM totalSalary as u, staff WHERE time=? AND u.email = staff.email'
     db.query(sql, [time], (err, response)=>{
         if (err) {
             console.log(err)

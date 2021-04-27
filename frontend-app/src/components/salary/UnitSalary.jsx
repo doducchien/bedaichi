@@ -15,7 +15,7 @@ import Button from '@material-ui/core/Button';
 
 //component
 import Popup from './Popup'
-
+import PopupExcel from './PopupExcel'
 
 
 function UnitSalary(props) {
@@ -201,6 +201,7 @@ function UnitSalary(props) {
             </div>
             <div className="body">
                 <div className="left">
+                    <PopupExcel user_role={user_role}/>
                     {listStaffUnit.map(item => {
                         let color = '#3f51b5'
                         if (item.setted === 0) color = '#ad1457'
@@ -214,7 +215,7 @@ function UnitSalary(props) {
                     <TextField onChange={onChangeInputSalary} value={formInputSalary.overtimeSalary} name='overtimeSalary' fullWidth label="Lương tăng ca (VND/h)" InputProps={{ readOnly: readOnly }} />
                     <TextField onChange={onChangeInputSalary} value={formInputSalary.allowance} name='allowance' fullWidth label="Phụ cấp sinh hoạt(VND/ngày)" InputProps={{ readOnly: readOnly }} />
                     <TextField onChange={onChangeInputSalary} value={formInputSalary.attendanceBonus} name='attendanceBonus' fullWidth label="Thưởng chuyên cần(% lương cơ bản/tháng)" InputProps={{ readOnly: readOnly }} />
-                    <TextField onChange={onChangeInputSalary} value={formInputSalary.completedBonus} name='completedBonus' fullWidth label="Thưởng đơn hoàn thành(VNĐ/tháng)" InputProps={{ readOnly: readOnly }} />
+                    <TextField onChange={onChangeInputSalary} value={formInputSalary.completedBonus} name='completedBonus' fullWidth label="Thưởng mặc định(VNĐ/tháng)" InputProps={{ readOnly: readOnly }} />
                     <TextField onChange={onChangeInputSalary} value={formInputSalary.awarenessBonus} name='awarenessBonus' fullWidth label="Thưởng ý thức (% lương cơ bản/tháng)" InputProps={{ readOnly: readOnly }} />
                     <TextField onChange={onChangeInputSalary} value={formInputSalary.note} name='note' fullWidth label="Ghi chú" InputProps={{ readOnly: readOnly }} />
 

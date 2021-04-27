@@ -40,7 +40,6 @@ export default function PopupExcel(props) {
                 fullScreen
 
             >
-                <DialogTitle >{"Use Google's location service?"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <TableContainer component={Paper}>
@@ -104,7 +103,6 @@ export default function PopupExcel(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">Đóng</Button>
-                    {/* <Button onClick={handleClose} color="primary" autoFocus>Xuất báo cáo</Button> */}
                     <ReactHTMLTableToExcel
                         table="export-regime"
                         filename={"Báo cáo danh sách chế độ " + nameRegime}
