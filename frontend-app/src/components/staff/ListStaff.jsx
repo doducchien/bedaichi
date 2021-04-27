@@ -21,8 +21,7 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import * as constraints from '../../constraints'
 
 //export excel
-import * as FileSaver from 'file-saver';
-import * as XLSX from 'xlsx';
+
 
 
 
@@ -30,8 +29,6 @@ import ReactExport from 'react-data-export';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 
 

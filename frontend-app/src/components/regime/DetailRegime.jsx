@@ -245,7 +245,7 @@ function DetailRegime(props) {
                         // console.log(item);
                         return <PopupDeleteEmail setResult={setResult} setDetailTypeRegime={setDetailTypeRegime} key={email + id + time} email={email} id={id} time={time} user_role={user_role} />
                     })}
-                    <PopupExcel listStaff={listStaff}/>
+                    <PopupExcel nameRegime={detailTypeRegime.name} price = {detailTypeRegime.price} listStaff={listStaff}/>
                 </div>
 
             </div>
