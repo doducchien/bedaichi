@@ -75,7 +75,7 @@ export default function PopupExcel(props) {
                                     </TableRow>
 
                                     <TableRow >
-                                        <TableCell align="center" colSpan={10} >Báo cáo danh sách hệ số lương toàn bộ nhân viên</TableCell>
+                                        <TableCell align="center" colSpan={10} >Báo cáo danh sách lương thực tế toàn bộ nhân viên</TableCell>
                                     </TableRow>
                                     <TableRow >
                                         <TableCell align="center" colSpan={10} >---Phòng quản lý lương---</TableCell>

@@ -62,7 +62,7 @@ function TableSalary(props) {
         setTimeSelect(time)
     }
 
-    
+
 
 
 
@@ -109,6 +109,16 @@ function TableSalary(props) {
                 <TableContainer component={Paper}>
                     <Table id='export-total-salary'>
                         <TableHead>
+                            <TableRow >
+                                <TableCell align="center" colSpan={10} >CÔNG TY TNHH DỊCH VỤ CÔNG NGHỆ THIÊN HẰNG</TableCell>
+                            </TableRow>
+
+                            <TableRow >
+                                <TableCell align="center" colSpan={10} >Báo cáo danh sách lương thực tế toàn bộ nhân viên</TableCell>
+                            </TableRow>
+                            <TableRow >
+                                <TableCell align="center" colSpan={10} >---Phòng quản lý lương---</TableCell>
+                            </TableRow>
                             <TableRow>
                                 <TableCell align="center">Họ tên</TableCell>
                                 <TableCell align="center">Email</TableCell>
@@ -144,7 +154,20 @@ function TableSalary(props) {
                                 </TableRow>
                             ))}
                         </TableBody>
+                        <TableHead>
+                            <TableRow >
+                                <TableCell colSpan={9} className='asign' align="center" ></TableCell>
+                            </TableRow>
+                            <TableRow >
+                                <TableCell colSpan={9} className='asign' align="center" ></TableCell>
+                            </TableRow>
+                            <TableRow >
+                                <TableCell colSpan={9} className='asign' align="center" ><span> Chữ ký giám đốc</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span> Chữ ký nhân viên quản lý chế độ</span></TableCell>
+                            </TableRow>
+
+                        </TableHead>
                     </Table>
+
                 </TableContainer>
             </div>
             <div style={{ height: '50px', width: '100%', textAlign: 'center' }}>

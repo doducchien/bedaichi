@@ -11,13 +11,17 @@ import axios from 'axios'
 import * as constraints from '../../constraints'
 
 //textfeild
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+
+
+//icon
+import CodeIcon from '@material-ui/icons/Code';
+import HomeIcon from '@material-ui/icons/Home';
+import HeightIcon from '@material-ui/icons/Height';
+import DragHandleIcon from '@material-ui/icons/DragHandle';
+import DonutLargeIcon from '@material-ui/icons/DonutLarge';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 
 
 function DetailDepartment(props) {
@@ -113,7 +117,7 @@ function DetailDepartment(props) {
                     readOnly: true,
                     startAdornment: (
                         <InputAdornment position="start">
-                            <AccountCircle />
+                            <CodeIcon />
                         </InputAdornment>
                     ),
                 }}
@@ -129,7 +133,7 @@ function DetailDepartment(props) {
                     readOnly: !updateMode,
                     startAdornment: (
                         <InputAdornment position="start">
-                            <AccountCircle />
+                            <HomeIcon />
                         </InputAdornment>
                     ),
                 }}
@@ -145,7 +149,7 @@ function DetailDepartment(props) {
                     readOnly: !updateMode,
                     startAdornment: (
                         <InputAdornment position="start">
-                            <AccountCircle />
+                            <HeightIcon />
                         </InputAdornment>
                     ),
                 }}
@@ -161,7 +165,7 @@ function DetailDepartment(props) {
                     readOnly: !updateMode,
                     startAdornment: (
                         <InputAdornment position="start">
-                            <AccountCircle />
+                            <DragHandleIcon />
                         </InputAdornment>
                     ),
                 }}
@@ -175,7 +179,7 @@ function DetailDepartment(props) {
                     readOnly: true,
                     startAdornment: (
                         <InputAdornment position="start">
-                            <AccountCircle />
+                            <DonutLargeIcon />
                         </InputAdornment>
                     ),
                 }}
@@ -192,16 +196,16 @@ function DetailDepartment(props) {
                     readOnly: !updateMode,
                     startAdornment: (
                         <InputAdornment position="start">
-                            <AccountCircle />
+                            <PeopleAltIcon />
                         </InputAdornment>
                     ),
                 }}
             />
-
+            <Button onClick={(e)=>deleteInfoDepartment()} fullWidth style={{ display: 'block', margin: 'auto', marginTop: '10px' }} variant="contained" color='default'>Trở về</Button>
             <Button onClick={toggleUpdateMode} style={{ display: 'block', margin: 'auto', marginTop: '10px' }} variant="contained" color={!updateMode ? "secondary" : 'default'}>{!updateMode ? "Chỉnh sửa" : 'Đóng'}</Button>
 
             <div style={updateMode ? { display: 'block' } : { display: 'none' }} className="form-update">
-                    <Button onClick={onUpdate} style={{ display: 'block', margin: 'auto', marginTop: '10px' }} variant="contained" color="primary">Xác nhận</Button>
+                    <Button onClick={onUpdate} fullWidth style={{ display: 'block', margin: 'auto', marginTop: '10px' }} variant="contained" color="primary">Xác nhận</Button>
             </div>
         </div>
     )
