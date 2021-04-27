@@ -1,9 +1,9 @@
 const db = require('../../connect_db')
 
 module.exports.createTypeRegime = (req, res) => {
-    const { id, name, note } = req.body
-    let sql = 'INSERT INTO typeRegime VALUES(?, ?, ?)'
-    db.query(sql, [id, name, note], (err, response) => {
+    const { id, name, note, price } = req.body
+    let sql = 'INSERT INTO typeRegime VALUES(?, ?, ?, ?)'
+    db.query(sql, [id, name, note, price], (err, response) => {
         if (err) {
             console.log(err)
             res.json({

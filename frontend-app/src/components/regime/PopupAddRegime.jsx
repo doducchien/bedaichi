@@ -25,7 +25,8 @@ function PopupAddRegime(props) {
     const [open, setOpen] = useState(false);
     const [inputText, setInputText] = useState({
         regime: '',
-        note: ''
+        note: '',
+        price: ''
     });
     const [resultAddRegime, setResultAddRegime] = useState(0)
 
@@ -43,7 +44,8 @@ function PopupAddRegime(props) {
             const body = {
                 id: constraints.randomID(),
                 name: inputText.regime.trim(),
-                note: inputText.note.trim()
+                note: inputText.note.trim(),
+                price: inputText.price.trim()
             }
             axios.post(route, body, {
                 headers: {
@@ -65,7 +67,7 @@ function PopupAddRegime(props) {
     }
 
     const handleChangeText = (event) => {
-        const {name, value} = event.target
+        const { name, value } = event.target
         setInputText({
             ...inputText,
             [name]: value
@@ -75,7 +77,7 @@ function PopupAddRegime(props) {
     useEffect(() => {
         if (!open) setResultAddRegime(0)
     }, [open])
-    useEffect(()=>{
+    useEffect(() => {
         reload()
     }, [resultAddRegime])
 
@@ -102,13 +104,24 @@ function PopupAddRegime(props) {
                                     autoComplete='off'
                                 />
 
+                                <TextField
+                                    name='price'
+                                    onChange={handleChangeText}
+                                    autoFocus
+                                    margin="dense"
+                                    label="Giá trị đãi ngộ (VND/tháng)"
+                                    type="text"
+                                    fullWidth
+                                    autoComplete='off'
+                                />
+
                                 <TextareaAutosize
-                                    style={{width: '100%', height: '150px', padding: '5px', resize: 'none'}}
+                                    style={{ width: '100%', height: '150px', padding: '5px', resize: 'none' }}
                                     name='note'
                                     placeholder="Ghi chú..."
                                     onChange={handleChangeText}
-                                    
-                                    
+
+
                                 />
 
                             </>

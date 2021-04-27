@@ -111,8 +111,16 @@ function ListStaff(props) {
                 <TableContainer style={{ width: '100%' }} component={Paper}>
                     <Table id='export'>
                         <TableHead>
+                            
                             <TableRow >
-                                <TableCell  align="center" colSpan={8} >Báo cáo danh sách nhân viên công ty TNHH dịch vụ công nghệ Thiên Hằng</TableCell>
+                                <TableCell  align="center" colSpan={8} >CÔNG TY TNHH DỊCH VỤ CÔNG NGHỆ THIÊN HẰNG</TableCell>
+                            </TableRow>
+                 
+                            <TableRow >
+                                <TableCell  align="center" colSpan={8} >Báo cáo danh sách nhân viên</TableCell>
+                            </TableRow>
+                            <TableRow >
+                                <TableCell  align="center" colSpan={8} >---Phòng quản lý nhân sự---</TableCell>
                             </TableRow>
                             <TableRow>
                                 {/* <TableCell>Ảnh</TableCell> */}
@@ -152,10 +160,14 @@ function ListStaff(props) {
                             }
 
                             )}
-                            <TableRow >
-                                <TableCell  align="center" colSpan={8} >s</TableCell>
-                            </TableRow>
+                            
                         </TableBody>
+                        <TableHead>
+                            <TableRow >
+                                <TableCell colSpan={8} className='asign'  align="center" colSpan={8} ><span> Chữ ký giám đốc</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span> Chữ ký nhân viên quản lý nhân sự</span></TableCell>
+                            </TableRow>
+                            
+                        </TableHead>
                     </Table>
 
                 </TableContainer>

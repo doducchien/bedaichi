@@ -38,7 +38,8 @@ function DetailRegime(props) {
     const { idRegime, user_role, setIdRegime } = props
     const [detailTypeRegime, setDetailTypeRegime] = useState({
         name: '',
-        note: ''
+        note: '',
+        price: ''
     })
 
     const [emailStaffAdd, setEmailStaffAdd] = useState('')
@@ -104,8 +105,8 @@ function DetailRegime(props) {
         setTimeSelect(time)
     }
 
-    const changeEmailSearch = (event)=>{
-        const {name, value} = event.target
+    const changeEmailSearch = (event) => {
+        const { name, value } = event.target
         setEmailSearch(value.trim())
 
     }
@@ -149,11 +150,25 @@ function DetailRegime(props) {
         <div className="detail-regime">
             <div className="type-regime">
                 <TextField
+                    style={{marginTop: '5px'}}
                     focused={true}
                     fullWidth
                     label="Tên chế độ"
 
                     value={detailTypeRegime.name}
+                    InputProps={{
+                        readOnly: true,
+                    }}
+                />
+
+                <TextField
+                    style={{marginTop: '5px'}}
+
+                    focused={true}
+                    fullWidth
+                    label="Giá trị đãi ngộ (VND/tháng)"
+
+                    value={detailTypeRegime.price}
                     InputProps={{
                         readOnly: true,
                     }}
@@ -177,9 +192,9 @@ function DetailRegime(props) {
                 <Button style={{ display: 'block', margin: 'auto', marginTop: '10px' }} onClick={() => setIdRegime(null)} color="secondary">Đóng</Button>
                 <TextField onChange={changeEmailSearch} style={{ marginTop: '20px' }} fullWidth id="outlined-basic" label="Tìm kiếm email" variant="outlined" />
                 <div className="result-search">
-                    {listStaff.map(item=>{
-                        const {email, id, time} = item
-                        if(item.email.toLowerCase().indexOf(emailSearch.toLowerCase()) !== - 1 && emailSearch !== ''){
+                    {listStaff.map(item => {
+                        const { email, id, time } = item
+                        if (item.email.toLowerCase().indexOf(emailSearch.toLowerCase()) !== - 1 && emailSearch !== '') {
                             return <PopupDeleteEmail setResult={setResult} setDetailTypeRegime={setDetailTypeRegime} key={email + id + time} email={email} id={id} time={time} user_role={user_role} />
                         }
                     })}
