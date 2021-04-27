@@ -227,7 +227,11 @@ FOR EACH ROW
 
 
 alter table hrm.staffProduct add column ispaid tinyint;
+alter table hrm.typeRegime add column price varchar(20);
 
+alter table hrm.regime add column ispaid tinyint;
+
+Insert into hrm.user value('admin@gmail.com', 'Nguyen Van A', '0988098989', '929984400000', 0,'admin', '9088cba2533915e6dbba3e1673314556');
 
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '220699';
