@@ -68,7 +68,7 @@ module.exports.getListStaffRegime = (req, res) => {
     const id = req.params['id']
     const time = req.params['time']
 
-    let sql = 'SELECT * FROM regime WHERE id=? AND time=?'
+    let sql = 'SELECT regime.email, staff.fullName, staff.phoneNumber, staff.sex, regime.ispaid FROM regime, staff WHERE regime.id=? AND regime.time=? AND staff.email = regime.email'
     db.query(sql, [id, time], (err, response) => {
         if (err) {
             console.log(err)
@@ -90,8 +90,8 @@ module.exports.getListStaffRegime = (req, res) => {
 
 module.exports.createStaffRegime = (req, res) => {
     const { email, time, id } = req.body
-    let sql = 'INSERT INTO regime VALUES(?,?, ?,?)'
-    db.query(sql, [email, time, null, id], (err, response) => {
+    let sql = 'INSERT INTO regime VALUES(?,?, ?,?, ?)'
+    db.query(sql, [email, time, null, id, 0], (err, response) => {
         if (err) {
             console.log(err)
             res.json({

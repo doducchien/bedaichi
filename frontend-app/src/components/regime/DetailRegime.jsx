@@ -24,6 +24,7 @@ import {
 //component
 import Popup from './Popup'
 import PopupDeleteEmail from './PopupDeleteEmail'
+import PopupExcel from './PopupExcel'
 
 
 const changeMMYY = (time) => {
@@ -66,7 +67,7 @@ function DetailRegime(props) {
         const body = {
             email: emailStaffAdd,
             time: changeMMYY(timeSelect),
-            id: idRegime
+            id: idRegime,
         }
         axios.post(route, body, {
             headers: {
@@ -145,6 +146,7 @@ function DetailRegime(props) {
         }
 
     }, [timeSelect, result])
+    console.log(listStaff)
 
     return (
         <div className="detail-regime">
@@ -243,6 +245,7 @@ function DetailRegime(props) {
                         // console.log(item);
                         return <PopupDeleteEmail setResult={setResult} setDetailTypeRegime={setDetailTypeRegime} key={email + id + time} email={email} id={id} time={time} user_role={user_role} />
                     })}
+                    <PopupExcel listStaff={listStaff}/>
                 </div>
 
             </div>
