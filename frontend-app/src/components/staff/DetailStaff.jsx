@@ -140,7 +140,7 @@ function DetailStaff(props) {
                 <Button onClick={changeStaff} style={{ width: '150px', height: '30px' }} variant="contained" color="secondary">Chỉnh sửa</Button>
 
                 <Pdf x={-35} targetRef={ref} filename="Báo cáo thông tin nhân viên.pdf">
-                    {({ toPdf }) => <Button style={{ width: '150px', height: '30px' }} variant="contained" color="primary" onClick={toPdf}>Generate Pdf</Button>}
+                    {({ toPdf }) => <Button style={{ width: '150px', height: '30px' }} variant="contained" color="primary" onClick={toPdf}>Xuất báo cáo</Button>}
                 </Pdf>
             </div>
 
